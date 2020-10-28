@@ -1,4 +1,23 @@
 const mix = require('laravel-mix');
+const watch = require('node-watch');
+const fs = require('fs');
+const jsonc = require('jsonc').safe;
+
+/*
+ * Parsing jsonc localization file synchronously
+ */
+
+const jsoncFilePath = 'resources/lang/ar.jsonc';
+
+watch(jsoncFilePath, (_event, name) => {
+    const jsoncFile = fs.readFileSync(jsoncFilePath, 'utf-8');
+
+    const parsedJsonc = jsonc.parse(jsoncFile)[1];
+
+    fs.writeFile('resources/lang/ar.json', JSON.stringify(parsedJsonc, null, 2), (error) => {
+        if (error) { console.log(error); }
+    });
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -11,9 +30,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
-
 if (mix.inProduction()) {
     mix.version();
 }
+
+mix.js('resources/js/app.js', 'public/js')
+   .js('resources/js/custom.js', 'public/js/custom.min.js')
+   .js('resources/js/sidebarmenu.js', 'public/js/sidebarmenu.min.js')
+   .js('resources/js/waves.js', 'public/js/waves.min.js')
+   .sass('resources/sass/app.scss', 'public/css')
+   .sass('resources/sass/style.scss', 'public/css/style.min.css')
+   .sass('resources/sass/rtl.scss', 'public/css/rtl.css')
