@@ -1,0 +1,19 @@
+{
+  "Login": "تسجيل الدخول",
+  "E-Mail Address": "البريد الإالكتروني",
+  "Password": "كلمة المرور",
+  "Remember Me": "تذكرني",
+  "Forgot Your Password?": "نسيت كلمة مرورك؟",
+  "Confirm Password": "تأكيد كلمة المرور",
+  "Please confirm your password before continuing.": "الرجاء تأكيد كلمة مرورك قبل الاستمرار",
+  "Reset Password": "تغيير كلمة المرور",
+  "Send Password Reset Link": "أرسل رابط تغيير كلمة المرور",
+  "My Profile": "حسابي",
+  "Account Settings": "اعدادات الحساب",
+  "Logout": "تسجيل الخروج",
+  "Manage Users": "إدارة المستخدمين",
+  "All Moderators": "كل المشرفيين",
+  "Add Moderator": "إضافة مشرفيين",
+  "Delete Moderator": "حذف مشرفيين",
+  "Home": "الرئيسية"
+}
