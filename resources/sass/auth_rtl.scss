@@ -1,0 +1,21 @@
+body {
+    direction: rtl;
+    font-family: Cairo, sans-serif;
+}
+.card-header,
+.card-body div {
+    text-align: right;
+}
+.form-check-input {
+    margin-left: unset;
+
+    + label {
+        margin-right: 1.25rem;
+    }
+}
+@media (min-width: 768px) {
+    .offset-md-4 {
+        margin-left: unset;
+        margin-right: 33.3333333333%;
+    }
+}

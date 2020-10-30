@@ -7,17 +7,23 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Title -->
+    <title>{{ config('app.name', 'Laravel') }}@yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 
-    <!-- Fonts -->
+    <!-- Fonts and Styles -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="{{ mix('css/auth.css') }}" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @if (app()->getLocale() === 'ar')
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+        <link href="{{ mix('css/auth_rtl.css') }}" rel="stylesheet">
+    @endif
+
+
 </head>
 <body>
     <div id="app">
@@ -37,7 +43,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav {{ app()->getLocale() === 'en' ? 'ml-auto' : 'mr-auto' }}">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
