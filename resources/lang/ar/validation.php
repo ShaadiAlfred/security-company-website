@@ -150,6 +150,7 @@ return [
     'attributes' => [
         'email'    => 'إيميل',
         'password' => 'كلمة المرور',
+        'name'     => 'إسم',
     ],
 
 ];

@@ -64,7 +64,7 @@ class ModeratorController extends Controller
             'remember_token' => Str::random(10),
         ]);
 
-        return redirect()->route('moderators.index');
+        return back()->with('success', 'Moderator was created!');
     }
 
     /**

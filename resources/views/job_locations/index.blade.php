@@ -1,18 +1,14 @@
 @extends('layouts.main')
 
-@push('stylesheets')
-    <link rel="stylesheet" href="{{ asset('css/toast.min.css') }}" type="text/css" media="screen" />
-@endpush
-
 @push('breadcrumb')
     <li class="breadcrumb-item">
         <a href="javascript:void(0)">
-            @lang('Manage Moderators')
+            @lang('Manage Job Locations')
         </a>
     </li>
 
     <li class="breadcrumb-item active">
-        @lang('All Moderators')
+        @lang('All Job Locations')
     </li>
 @endpush
 
@@ -20,29 +16,31 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">@lang('All Moderators')</h4>
+                <h4 class="card-title">@lang('All Job Locations')</h4>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>@lang('Id')</th>
                                 <th>@lang('Name')</th>
+                                <th>@lang('Hourly Wage')</th>
                                 <th class="text-nowrap">@lang('Action')</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($moderators as $id => $moderator)
+                            @foreach($jobLocations as $id => $location)
                                 <tr>
                                     <td>{{ ++$id }}</td>
-                                    <td>{{ $moderator->name }}</td>
+                                    <td>{{ $location->name }}</td>
+                                    <td>{{ $location->hourly_wage }}</td>
                                     <td>
                                         <div class="button-group">
-                                            <a href="{{ route('moderators.edit', $moderator->id) }}"
+                                            <a href="{{ route('job_locations.edit', $location->id) }}"
                                             class="btn waves-effect waves-light btn-info">
                                                 @lang('Edit')
                                             </a>
-                                            <button user-id="{{ $moderator->id }}" type="button"
-                                                    class="btn waves-effect waves-light btn-danger delete-user">
+                                            <button job-location-id="{{ $location->id }}" type="button"
+                                                    class="btn waves-effect waves-light btn-danger delete-job-location">
                                                 @lang('Delete')
                                             </button>
                                         </div>
@@ -58,17 +56,17 @@
 @endsection
 
 @push('javascript')
-    <x-toast.success message="Moderator was deleted successfully!" />
+    <x-toast.success message="Job location was deleted successfully!" />
 
     <script type="text/javascript">
         $(document).ready(() => {
-            $('.btn.delete-user').on('click', function () {
-                const userId = $(this).attr('user-id');
+            $('.btn.delete-job-location').on('click', function () {
+                const jobLocationId = $(this).attr('job-location-id');
 
-                $.ajax('{{ route('moderators.destroy', '') }}/' + userId, {
+                $.ajax('{{ route('job_locations.destroy', '') }}/' + jobLocationId, {
                     method: 'DELETE',
                     data: {
-                        userId
+                       jobLocationId
                     },
                     success: () => {
                         showSuccess();

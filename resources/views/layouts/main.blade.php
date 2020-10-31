@@ -211,6 +211,23 @@
                                     <li><a href="{{ route('moderators.create') }}">@lang('Add Moderator')</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                                aria-expanded="false">
+                                    <i class="ti-location-pin"></i>
+                                    <span class="hide-menu">
+                                        @lang('Manage Job Locations')
+                                    </span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{ route('job_locations.index') }}">@lang('All Job Locations')</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('job_locations.create') }}">@lang('Add Job Location')</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
                     </ul>
                 </nav>

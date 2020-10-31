@@ -76,3 +76,9 @@
         </div>
     </div>
 @endsection
+
+@push('javascript')
+    @if (session()->has('success'))
+        <x-toast.success message="{{ session('success') }}" automaticTrigger="true" />
+    @endif
+@endpush

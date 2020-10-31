@@ -19,15 +19,33 @@
     "Logout": "تسجيل الخروج",
 
     // Sidebar nav
-    "Manage Moderators": "إدارة المشرفين",
-    "All Moderators": "كل المشرفيين",
-    "Add Moderator": "إضافة مشرفيين",
-    "Delete Moderator": "حذف مشرفيين",
+        // Manage Moderators
+        "Manage Moderators": "إدارة المشرفين",
+        "All Moderators": "كل المشرفين",
+        "Add Moderator": "إضافة مشرفين",
+        "Delete Moderator": "حذف مشرفين",
 
-    // Mangae Moderators
+        // Manage Job Locations
+        "Manage Job Locations": "إدارة أماكن العمل",
+        "All Job Locations": "كل أماكن العمل",
+        "Add Job Location": "إضافة مكان عمل",
+        "Delete Job Location": "حذف مكان عمل",
+
+    // Manage Moderators
     "Edit Moderator": "التعديل على مشرف",
     "Update Moderator": "تحديث بيانات المشرف",
+    "Moderator was created successfully!": "تم إنشاء مشرف جديد بنجاح!",
     "Moderator was updated!": "تم تحديث بيانات المشرف بنجاح!",
+    "Moderator was deleted successfully!": "تم حذف المشرف بنجاح",
+
+    // Manage Job Locations
+    "Edit Job Location": "التعديل على مكان العمل",
+    "Update Job Location": "تحديث مكان العمل",
+    "Job location was created successfully!": "تم إنشاء مكان عمل جديد بنجاح!",
+    "Job location was updated!": "تم تحديث بيانات مكان العمل بنجاح!",
+    "Job location was deleted successfully!": "تم حذف مكان العمل بنجاح!",
+    "Enter hourly wage of this location": "ادخل الأجر بالساعة لهذا المكان",
+    "Hourly Wage": "الأجر بالساعة",
 
     // Index
     "Home": "الرئيسية",
@@ -40,6 +58,5 @@
     "Delete": "حذف",
 
     // Toast
-    "Success!": "عملية ناجحة!",
-    "User was deleted successfully!": "تم حذف المشرف بنجاح"
+    "Success!": "عملية ناجحة!"
 }
