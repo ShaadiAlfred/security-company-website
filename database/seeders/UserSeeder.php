@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,6 +23,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password'          => Hash::make('password'),
             'role_id'           => Role::whereName('Admin')->first()->id,
+            'remember_token'    => Str::random(10),
         ]);
         $this->command->info('Admin user was created!');
 

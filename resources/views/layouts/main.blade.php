@@ -14,7 +14,7 @@
         <meta name="author" content="">
 
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
 
         <!-- Title -->
         @if (isset($pageTitle))
@@ -23,11 +23,11 @@
             <title>{{ config('app.name', 'Laravel') }}</title>
         @endif
         <!-- Other meta tags -->
-        @yield('meta_tags')
+        @stack('meta_tags')
 
         <!-- Main CSS -->
         <!--Toaster Popup message CSS -->
-        <link href="{{ asset('assets/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/node_modules/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
         <!-- Style file CSS -->
         <link href="{{ mix('css/style.min.css') }}" rel="stylesheet">
 
@@ -35,12 +35,12 @@
         @if (app()->getLocale() === 'ar')
             {{-- Font --}}
             <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
-
+            {{-- RTL stylesheet --}}
             <link rel="stylesheet" href="{{ mix('css/rtl.css') }}" type="text/css" media="screen" />
         @endif
 
         <!-- Additional stylesheets -->
-        @yield('stylesheets')
+        @stack('stylesheets')
     </head>
 
     <body class="skin-blue fixed-layout">
@@ -66,22 +66,22 @@
                     <!-- Logo -->
                     <!-- ============================================================== -->
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="{{ route('index') }}">
                             <!-- Logo icon -->
                             <b>
                                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                                 <!-- Dark Logo icon -->
-                                <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                                <img src="/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo icon -->
-                                <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                                <img src="/assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
                             </b>
                             <!--End Logo icon -->
                             <!-- Logo text -->
                             <span>
                                 <!-- dark Logo text -->
-                                <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                                <img src="/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
                                 <!-- Light Logo text -->
-                                <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                                <img src="/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
                             </span>
                         </a>
                     </div>
@@ -115,9 +115,9 @@
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="assets/images/users/1.jpg" alt="user" class="">
+                                    <img src="{{ asset('storage/profile-pictures/default.png') }}" alt="user" class="">
                                     <span class="hidden-md-down">
-                                        أحمد &nbsp;<i class="fa fa-angle-down"></i>
+                                        {{ Auth::user()->name }} &nbsp;<i class="fa fa-angle-down"></i>
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
@@ -134,7 +134,7 @@
                                     <!-- text-->
                                     <div class="dropdown-divider"></div>
                                     <!-- text-->
-                                    <a href="login.html" class="dropdown-item">
+                                    <a onclick="logout()" href="javascript:void(0)" class="dropdown-item">
                                         <i class="fa fa-power-off"></i> @lang('Logout')
                                     </a>
                                     <!-- text-->
@@ -161,8 +161,10 @@
                     <ul id="sidebarnav">
                         <li class="user-pro">
                             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                <img src="assets/images/users/1.jpg" alt="user-img" class="img-circle">
-                                <span class="hide-menu">أحمد محمود</span>
+                                <img src="{{ asset('storage/profile-pictures/default.png') }}" alt="user-img" class="img-circle">
+                                <span class="hide-menu">
+                                    {{ Auth::user()->name }}
+                                </span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li>
@@ -176,7 +178,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)">
+                                    <a onclick="logout()" href="javascript:void(0)">
                                         <i class="fa fa-power-off"></i> @lang('Logout')
                                     </a>
                                 </li>
@@ -189,26 +191,27 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Minimal </a></li>
+                                <li><a href="javascript:void(0)">Minimal </a></li>
                                 <li><a href="index2.html">Analytical</a></li>
                                 <li><a href="index3.html">Demographical</a></li>
                                 <li><a href="index4.html">Modern</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
-                               aria-expanded="false">
-                                <i class="ti-layout-grid2"></i>
-                                <span class="hide-menu">
-                                    @lang('Manage Users')
-                                </span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">@lang('All Moderators')</a></li>
-                                <li><a href="app-calendar.html">@lang('Add Moderator')</a></li>
-                                <li><a href="app-chat.html">@lang('Delete Moderator')</a></li>
-                            </ul>
-                        </li>
+                        @if (Auth::user()->isAdmin())
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                                aria-expanded="false">
+                                    <i class="ti-user"></i>
+                                    <span class="hide-menu">
+                                        @lang('Manage Moderators')
+                                    </span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="{{ route('moderators.index') }}">@lang('All Moderators')</a></li>
+                                    <li><a href="{{ route('moderators.create') }}">@lang('Add Moderator')</a></li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -239,11 +242,11 @@
                             <div class="d-flex justify-content-end align-items-center">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        <a href="javascript:void(0)">
+                                        <a href="{{ route('index') }}">
                                             @lang('Home')
                                         </a>
                                     </li>
-                                    @yield('breadcrumb')
+                                    @stack('breadcrumb')
                                     {{-- <li class="breadcrumb-item active">Dashboard 2</li> --}}
                                 </ol>
                             </div>
@@ -275,27 +278,49 @@
         <!-- End Wrapper -->
         <!-- ============================================================== -->
 
+        <!-- Logout Form -->
+        <form id="logout-form" method="POST" action="{{ route('logout') }}">
+            @csrf
+        </form>
+
         <!-- JavaScript -->
-        <script src="{{ asset('assets/node_modules/jquery/jquery-3.2.1.min.js') }}"></script>
+        <script src="{{ asset('/assets/node_modules/jquery/jquery-3.2.1.min.js') }}"></script>
         <!-- Bootstrap popper Core JavaScript -->
-        <script src="{{ asset('assets/node_modules/popper/popper.min.js') }}"></script>
-        <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/assets/node_modules/popper/popper.min.js') }}"></script>
+        <script src="{{ asset('/assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <!-- Perfect Scrollbar JavaScript -->
-        <script src="{{ asset('js/perfect-scrollbar.jquery.min.js') }}"></script>
+        <script src="{{ asset('/js/perfect-scrollbar.jquery.min.js') }}"></script>
         <!-- Wave Effects -->
-        <script src="{{ mix('js/waves.min.js') }}"></script>
+        <script src="{{ mix('/js/waves.min.js') }}"></script>
         <!-- Menu sidebar -->
-        <script src="{{ mix('js/sidebarmenu.min.js') }}"></script>
+        <script src="{{ mix('/js/sidebarmenu.min.js') }}"></script>
         <!-- Stickey Kit -->
-        <script src="{{ asset('assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
-        <script src="{{ asset('assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
+        <script src="{{ asset('/assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
+        <script src="{{ asset('/assets/node_modules/sparkline/jquery.sparkline.min.js') }}"></script>
         <!-- Custom JavaScript -->
-        <script src="{{ mix('js/custom.min.js') }}"></script>
+        <script src="{{ mix('/js/custom.min.js') }}"></script>
+
+        <script type="text/javascript">
+            function logout() {
+                document.getElementById('logout-form').submit();
+            }
+
+            // Ajax Setup
+            window.$.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            window.$.toastDefaults = {
+                position: 'bottom-right',
+            };
+        </script>
 
         <!-- ============================================================== -->
         <!-- This page plugins -->
         <!-- ============================================================== -->
-        @yield('javascript')
+        @stack('javascript')
     </body>
 
 </html>

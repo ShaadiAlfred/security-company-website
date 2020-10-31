@@ -7,9 +7,11 @@
     "Remember Me": "تذكرني",
     "Forgot Your Password?": "نسيت كلمة مرورك؟",
     "Confirm Password": "تأكيد كلمة المرور",
+    "Password Confirm": "أدخل كلمة المرور مرة أخرى",
     "Please confirm your password before continuing.": "الرجاء تأكيد كلمة مرورك قبل الاستمرار",
     "Reset Password": "تغيير كلمة المرور",
     "Send Password Reset Link": "أرسل رابط تغيير كلمة المرور",
+    "Enter email address": "ادخل الإيميل",
 
     // Profile
     "My Profile": "حسابي",
@@ -17,12 +19,27 @@
     "Logout": "تسجيل الخروج",
 
     // Sidebar nav
-    "Manage Users": "إدارة المستخدمين",
+    "Manage Moderators": "إدارة المشرفين",
     "All Moderators": "كل المشرفيين",
     "Add Moderator": "إضافة مشرفيين",
     "Delete Moderator": "حذف مشرفيين",
 
-    // Index
-    "Home": "الرئيسية"
+    // Mangae Moderators
+    "Edit Moderator": "التعديل على مشرف",
+    "Update Moderator": "تحديث بيانات المشرف",
+    "Moderator was updated!": "تم تحديث بيانات المشرف بنجاح!",
 
+    // Index
+    "Home": "الرئيسية",
+
+    // Tables
+    "Id": "رقم",
+    "Name": "الإسم",
+    "Action": "إدارة",
+    "Edit": "تعديل",
+    "Delete": "حذف",
+
+    // Toast
+    "Success!": "عملية ناجحة!",
+    "User was deleted successfully!": "تم حذف المشرف بنجاح"
 }

@@ -530,3 +530,13 @@ h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: $sans-serif;
 }
+
+// jQuery Toast
+.jq-toast-single {
+    font-family: Cairo, sans-serif;
+
+    .jq-toast-heading {
+        font-family: Cairo, sans-serif;
+        margin-right: 10px;
+    }
+}
