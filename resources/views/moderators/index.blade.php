@@ -17,44 +17,44 @@
 @endpush
 
 @section('content')
-<div class="col-12">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">@lang('All Moderators')</h4>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>@lang('Id')</th>
-                            <th>@lang('Name')</th>
-                            <th class="text-nowrap">@lang('Action')</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($moderators as $id => $moderator)
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">@lang('All Moderators')</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ ++$id }}</td>
-                                <td>{{ $moderator->name }}</td>
-                                <td>
-                                    <div class="button-group">
-                                        <a href="{{ route('moderators.edit', $moderator->id) }}"
-                                           class="btn waves-effect waves-light btn-info">
-                                            @lang('Edit')
-                                        </a>
-                                        <button user-id="{{ $moderator->id }}" type="button"
-                                                class="btn waves-effect waves-light btn-danger delete-user">
-                                            @lang('Delete')
-                                        </button>
-                                    </div>
-                                </td>
+                                <th>@lang('Id')</th>
+                                <th>@lang('Name')</th>
+                                <th class="text-nowrap">@lang('Action')</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($moderators as $id => $moderator)
+                                <tr>
+                                    <td>{{ ++$id }}</td>
+                                    <td>{{ $moderator->name }}</td>
+                                    <td>
+                                        <div class="button-group">
+                                            <a href="{{ route('moderators.edit', $moderator->id) }}"
+                                            class="btn waves-effect waves-light btn-info">
+                                                @lang('Edit')
+                                            </a>
+                                            <button user-id="{{ $moderator->id }}" type="button"
+                                                    class="btn waves-effect waves-light btn-danger delete-user">
+                                                @lang('Delete')
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @push('javascript')
