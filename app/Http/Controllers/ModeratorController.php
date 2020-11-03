@@ -56,15 +56,15 @@ class ModeratorController extends Controller
         ]);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => Role::whereName('Moderator')->first()->id,
+            'name'              => $request->name,
+            'email'             => $request->email,
+            'password'          => Hash::make($request->password),
+            'role_id'           => Role::whereName('Moderator')->first()->id,
             'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
+            'remember_token'    => Str::random(10),
         ]);
 
-        return back()->with('success', 'Moderator was created!');
+        return back()->with('success', 'Moderator was created successfully!');
     }
 
     /**

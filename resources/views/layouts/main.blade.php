@@ -197,7 +197,7 @@
                                 <li><a href="index4.html">Modern</a></li>
                             </ul>
                         </li>
-                        @if (Auth::user()->isAdmin())
+                        @if(Auth::user()->isAdmin())
                             <li>
                                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
                                 aria-expanded="false">

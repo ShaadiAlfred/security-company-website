@@ -33,12 +33,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{user}', [ModeratorController::class, 'destroy'])->name('moderators.destroy');
     });
 
-    Route::middleware('can:manage-moderators')->prefix('job_locations')->group(function () {
-        Route::get('/', [JobLocationController::class, 'index'])->name('job_locations.index');
-        Route::get('/create', [JobLocationController::class, 'create'])->name('job_locations.create');
-        Route::post('/create', [JobLocationController::class, 'store'])->name('job_locations.store');
-        Route::get('/{job_location}/edit', [JobLocationController::class, 'edit'])->name('job_locations.edit');
-        Route::put('/{job_location}', [JobLocationController::class, 'update'])->name('job_locations.update');
-        Route::delete('/{job_location}', [JobLocationController::class, 'destroy'])->name('job_locations.destroy');
+    Route::resource('job_locations', JobLocationController::class)->middleware('can:manage-job-locations');
     });
 });
