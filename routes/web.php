@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\JobLocationController;
 use Illuminate\Support\Facades\Auth;
@@ -34,5 +35,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('job_locations', JobLocationController::class)->middleware('can:manage-job-locations');
+
+    Route::middleware('can:manage-employees')->prefix('employees')->group(function () {
+        Route::get('import', [EmployeeController::class, 'showImportExcelForm'])->name('employees.showExcelForm');
+        Route::post('import', [EmployeeController::class, 'storeFromExcel'])->name('employees.storeFromExcel');
     });
+
+    Route::resource('employees', EmployeeController::class)->middleware('can:manage-employees');
+
 });

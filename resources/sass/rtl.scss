@@ -518,6 +518,12 @@ My Edits
     text-align: right;
 }
 
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+    padding-right: unset;
+    padding-left: calc(1.5em + .75rem);
+}
+
 // Font
 $sans-serif: Cairo, Poppins, sans-serif;
 
@@ -539,4 +545,9 @@ h1, h2, h3, h4, h5, h6,
         font-family: Cairo, sans-serif;
         margin-right: 10px;
     }
+}
+
+// DataTables search
+#table_filter {
+    float: left;
 }

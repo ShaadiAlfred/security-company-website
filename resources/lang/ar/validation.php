@@ -148,9 +148,10 @@ return [
     */
 
     'attributes' => [
-        'email'    => 'إيميل',
-        'password' => 'كلمة المرور',
-        'name'     => 'إسم',
+        'email'       => 'إيميل',
+        'password'    => 'كلمة المرور',
+        'name'        => 'إسم',
+        'national_id' => 'رقم قومي',
     ],
 
 ];

@@ -1,9 +1,5 @@
 @extends('layouts.main')
 
-@push('stylesheets')
-    <link rel="stylesheet" href="{{ asset('css/toast.min.css') }}" type="text/css" media="screen" />
-@endpush
-
 @push('breadcrumb')
     <li class="breadcrumb-item">
         <a href="javascript:void(0)">
