@@ -1,5 +1,10 @@
 @extends('layouts.main')
 
+@push('stylesheets')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
+@endpush
+
 @push('breadcrumb')
     <li class="breadcrumb-item">
         <a href="javascript:void(0)">
@@ -10,11 +15,6 @@
     <li class="breadcrumb-item active">
         @lang('All Employees')
     </li>
-@endpush
-
-@push('stylesheets')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
 @endpush
 
 @section('content')
@@ -77,9 +77,7 @@
                                     <td>{{ $employee->job_location }}</td>
                                     <td>{{ $employee->section }}</td>
                                     <td>{{ $employee['3ohda'] }}</td>
-                                    <td>
-                                        {{ $employee->hired_on ? $employee->hired_on->format('d/m/Y') : null }}
-                                    </td>
+                                    <td>{{ $employee->hired_on }}</td>
                                     <td>{{ $employee->status }}</td>
                                     <td>{{ $employee->kashf_amny }}</td>
                                     <td>{{ $employee->no3_el_mo5alfa }}</td>

@@ -172,7 +172,7 @@
                                         <input id="hired_on" name="hired_on" type="text" class="form-control
                                                mydatepicker" placeholder="dd/mm/yyyy" required
                                                pattern="\d\d/\d\d/\d\d\d\d"
-                                               value="{{ $employee->hired_on->format('d/m/Y') }}">
+                                               value="{{ $employee->hired_on }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="icon-calender"></i></span>
                                         </div>

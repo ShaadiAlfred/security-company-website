@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\JobLocationController;
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/{user}/edit', [ModeratorController::class, 'edit'])->name('moderators.edit');
         Route::put('/{user}', [ModeratorController::class, 'update'])->name('moderators.update');
         Route::delete('/{user}', [ModeratorController::class, 'destroy'])->name('moderators.destroy');
+
+        Route::get('/manage_attendance', [AttendanceController::class, 'manageAttendance'])->name('moderators.manage_attendance');
     });
 
     Route::resource('job_locations', JobLocationController::class)->middleware('can:manage-job-locations');
@@ -39,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:manage-employees')->prefix('employees')->group(function () {
         Route::get('import', [EmployeeController::class, 'showImportExcelForm'])->name('employees.showExcelForm');
         Route::post('import', [EmployeeController::class, 'storeFromExcel'])->name('employees.storeFromExcel');
+        Route::get('attendance', [EmployeeController::class, 'attendance'])->name('employees.attendance');
+        Route::post('attendance', [EmployeeController::class, 'submitAttendance'])->name('employees.submitAttendance');
     });
 
     Route::resource('employees', EmployeeController::class)->middleware('can:manage-employees');

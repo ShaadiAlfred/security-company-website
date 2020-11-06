@@ -4,10 +4,10 @@ namespace App\View\Components\Toast;
 
 use Illuminate\View\Component;
 
-class Success extends Component
+class Error extends Component
 {
     /**
-     * Success message
+     * Error message
      */
     public string $message;
 
@@ -34,6 +34,6 @@ class Success extends Component
      */
     public function render()
     {
-        return view('components.toast.success');
+        return view('components.toast.error');
     }
 }

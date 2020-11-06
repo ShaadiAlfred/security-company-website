@@ -24,6 +24,7 @@
         "All Moderators": "كل المشرفين",
         "Add Moderator": "إضافة مشرفين",
         "Delete Moderator": "حذف مشرفين",
+        "Manage Attendance": "إدارة الحضور",
 
         // Manage Job Locations
         "Manage Job Locations": "إدارة أماكن العمل",
@@ -54,12 +55,15 @@
     "Hourly Wage": "الأجر بالساعة",
 
     // Manage Employees
+    "Employee": "موظف",
     "Edit Employee": "التعديل على موظف",
     "Update Employee": "تحديث بيانات الموظف",
     "Employee was created successfully!": "تم إنشاء موظف جديد بنجاح!",
     "Employee was updated!": "تم تحديث بيانات الموظف بنجاح!",
     "Employee was deleted successfully!": "تم حذف الموظف بنجاح",
     "Employees were imoprted successfully!": "تم استيراد الموظفين بنجاح!",
+    "Attendance sent successfully!": "تم تسجيل الحضور بنجاح!",
+    "Attendance was not sent successfully!": "حدث خطأ أثناء تسجيل الحضور!",
     "National ID": "الرقم القومي",
     "Address": "العنوان",
     "Phone": "رقم التليفون",
@@ -85,6 +89,14 @@
     "Import Excel Files": "استيراد ملفات اكسيل",
     "Files": "الملفات",
     "Upload Files": "ارفع الملفات",
+    "Attendance": "الحضور",
+    "Note": "ملاحظة",
+    "Send": "إرسال",
+
+    // Manage Attendance
+    "Submitted By": "المشرف",
+    "Submitted From": "مكان المشرف",
+    "Submitted At": "وقت التسجيل",
 
     // Index
     "Home": "الرئيسية",
@@ -97,5 +109,6 @@
     "Delete": "حذف",
 
     // Toast
-    "Success!": "عملية ناجحة!"
+    "Success!": "عملية ناجحة!",
+    "Error!": "عملية فاشلة!"
 }

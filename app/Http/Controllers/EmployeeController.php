@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EmployeesImport;
+use App\Models\Attendance;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -48,8 +50,6 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate($this->getValidationRules());
-
-        $validatedData['hired_on'] = Carbon::createFromFormat('d/m/Y', $validatedData['hired_on']);
 
         Employee::create($validatedData);
 
@@ -94,8 +94,6 @@ class EmployeeController extends Controller
     {
         $validatedData = $request->validate($this->getValidationRules($employee->id));
 
-        $validatedData['hired_on'] = Carbon::createFromFormat('d/m/Y', $validatedData['hired_on']);
-
         $employee->update($validatedData);
 
         return back()->with('success', 'Employee was updated!');
@@ -139,6 +137,84 @@ class EmployeeController extends Controller
         }
 
         return response('Success', 200);
+    }
+
+    /**
+     * Show attendance form
+     *
+     * @return |Illuminate\View\View
+     */
+    public function attendance(): \Illuminate\View\View
+    {
+        $pageTitle = trans('Attendance');
+        $employees = Employee::get(['id', 'name']);
+
+        return view('employees.attendance', [
+            'pageTitle' => $pageTitle,
+            'employees' => $employees,
+        ]);
+    }
+
+    /**
+     * Submit attendance
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function submitAttendance(Request $request): \Illuminate\Http\Response
+    {
+        $request->validate([
+            'employeeId' => 'required',
+        ]);
+
+        try {
+            $location = $this->getLocation(floatval($request->latitude), floatval($request->longitude));
+
+            Attendance::create([
+                'employee_id'    => $request->employeeId,
+                'note'           => $request->note,
+                'submitted_by'   => $request->user()->id,
+                'submitted_from' => $location,
+            ]);
+
+            return response('Success', 200);
+        } catch (\Exception $e) {
+            return response([
+                'Message' => 'Failure',
+                'Error' => $e->getMessage() . '. On line: ' . $e->getLine() . '. In file: ' . $e->getFile(),
+            ], 400);
+        }
+
+    }
+
+    /**
+     * Get location of coordinates
+     *
+     * @param float $latitude
+     * @param float $longitude
+     *
+     * @return string $location
+     */
+    private function getLocation(float $latitude, float $longitude): string
+    {
+        $apiUrl = env('LOCATIONIQ_ENDPOINT');
+
+        $response = Http::get($apiUrl, [
+            'key'             => env('LOCATIONIQ_TOKEN'),
+            'lat'             => $latitude,
+            'lon'             => $longitude,
+            'format'          => 'json',
+            'accept-language' => 'ar',
+        ]);
+
+        if ($response->failed()) {
+            throw new \Exception($response->body());
+        }
+
+        // Change , to ، if locale === 'ar'
+        $location = str_replace(',', '،', $response->json()['display_name']);
+
+        return $location;
     }
 
     /**

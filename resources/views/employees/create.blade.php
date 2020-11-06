@@ -117,7 +117,7 @@
                                     <label for="notes">
                                         @lang('Notes')
                                     </label>
-                                    <input name="notes" type="text" id="notes" required maxlength="64"
+                                    <input name="notes" type="text" id="notes" maxlength="64"
                                            class="form-control @error('notes') is-invalid @enderror"
                                            placeholder="@lang('Notes')"
                                            value="{{ old('notes') }}">

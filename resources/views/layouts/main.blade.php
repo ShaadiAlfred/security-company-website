@@ -184,19 +184,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
-                               aria-expanded="false">
-                                <i class="icon-speedometer"></i>
-                                <span class="hide-menu">Dashboard</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="javascript:void(0)">Minimal </a></li>
-                                <li><a href="index2.html">Analytical</a></li>
-                                <li><a href="index3.html">Demographical</a></li>
-                                <li><a href="index4.html">Modern</a></li>
-                            </ul>
-                        </li>
                         @if(Auth::user()->isAdmin())
                             <li>
                                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
@@ -209,6 +196,7 @@
                                 <ul aria-expanded="false" class="collapse">
                                     <li><a href="{{ route('moderators.index') }}">@lang('All Moderators')</a></li>
                                     <li><a href="{{ route('moderators.create') }}">@lang('Add Moderator')</a></li>
+                                    <li><a href="{{ route('moderators.manage_attendance') }}">@lang('Manage Attendance')</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -243,6 +231,7 @@
                                     <li><a href="{{ route('employees.index') }}">@lang('All Employees')</a></li>
                                     <li><a href="{{ route('employees.create') }}">@lang('Add Employee')</a></li>
                                     <li><a href="{{ route('employees.showExcelForm') }}">@lang('Import Excel Files')</a></li>
+                                    <li><a href="{{ route('employees.attendance') }}">@lang('Attendance')</a></li>
                                 </ul>
                             </li>
                         @endcan

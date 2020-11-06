@@ -22,10 +22,10 @@ class EmployeesImport implements ToModel, WithStartRow
 
         if (! is_null($hiredOn)) {
             if (! strpos($hiredOn, '/')) {
-                $hiredOn = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($hiredOn);
+                $hiredOn = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($hiredOn)->format('d/m/Y');
             }
             // $hiredOn = Carbon::make($hiredOn);
-            $hiredOn = Carbon::createFromFormat('d/m/Y', $hiredOn);
+            // $hiredOn = Carbon::createFromFormat('d/m/Y', $hiredOn); Check if excel supports it
         }
 
         return new Employee([
