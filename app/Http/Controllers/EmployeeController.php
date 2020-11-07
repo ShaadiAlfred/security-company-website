@@ -175,6 +175,8 @@ class EmployeeController extends Controller
                 'note'           => $request->note,
                 'submitted_by'   => $request->user()->id,
                 'submitted_from' => $location,
+                'latitude'       => $request->latitude,
+                'longitude'      => $request->longitude,
             ]);
 
             return response('Success', 200);

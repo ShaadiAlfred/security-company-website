@@ -46,7 +46,18 @@
                                     <td>{{ $attendanceRecord->employee->name }}</td>
                                     <td>{{ $attendanceRecord->note }}</td>
                                     <td>{{ $attendanceRecord->submittedBy->name }}</td>
-                                    <td>{{ $attendanceRecord->submitted_from }}</td>
+                                    <td>
+                                        @php
+                                        $coordinates = $attendanceRecord->latitude .
+                                                      ',' .
+                                                      $attendanceRecord->longitude;
+                                        $googleMaps  = "https://www.google.com/maps/search/?api=1&query=${coordinates}";
+                                        @endphp
+                                        <a href="{{ $googleMaps }}"
+                                           target="_blank">
+                                            {{ $attendanceRecord->submitted_from }}
+                                        </a>
+                                    </td>
                                     <td>{{ $attendanceRecord->created_at->format('h:i A - d/m/Y') }}</td>
                                 </tr>
                             @endforeach

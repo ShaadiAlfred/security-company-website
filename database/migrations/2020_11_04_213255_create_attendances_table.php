@@ -19,6 +19,8 @@ class CreateAttendancesTable extends Migration
             $table->string('note', 128)->nullable();
             $table->foreignId('submitted_by')->references('id')->on('users');
             $table->string('submitted_from', 256);
+            $table->double('latitude', 16, 12);
+            $table->double('longitude', 16, 12);
             $table->timestamps();
         });
     }
