@@ -168,7 +168,7 @@ class EmployeeController extends Controller
         ]);
 
         try {
-            $location = $this->getLocation(floatval($request->latitude), floatval($request->longitude));
+            $location = $this->getLocation($request->latitude, $request->longitude);
 
             Attendance::create([
                 'employee_id'    => $request->employeeId,
@@ -190,12 +190,12 @@ class EmployeeController extends Controller
     /**
      * Get location of coordinates
      *
-     * @param float $latitude
-     * @param float $longitude
+     * @param string $latitude
+     * @param string $longitude
      *
      * @return string $location
      */
-    private function getLocation(float $latitude, float $longitude): string
+    private function getLocation(string $latitude, string $longitude): string
     {
         $apiUrl = env('LOCATIONIQ_ENDPOINT');
 

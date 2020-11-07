@@ -21,6 +21,7 @@ class AttendanceController extends Controller
             'attendanceRecords' => $attendanceRecords,
         ]);
     }
+
     /**
      * Display a listing of the resource.
      *
