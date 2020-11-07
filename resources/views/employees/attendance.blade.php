@@ -45,7 +45,7 @@
                                     <label class="m-t-20">
                                         @lang('Note')
                                     </label>
-                                    <input class="form-control" id="otes" name="otes" placeholder="@lang('Note')"
+                                    <input class="form-control" id="note" name="note" placeholder="@lang('Note')"
                                            maxlength="128" type="text">
                                 </div>
                             </div>
