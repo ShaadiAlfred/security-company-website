@@ -30,7 +30,11 @@
                             @foreach($moderators as $id => $moderator)
                                 <tr>
                                     <td>{{ ++$id }}</td>
-                                    <td>{{ $moderator->name }}</td>
+                                    <td>
+                                        <a href="{{ route('moderators.show', $moderator) }}">
+                                            {{ $moderator->name }}
+                                        </a>
+                                    </td>
                                     <td>
                                         <div class="button-group">
                                             <a href="{{ route('moderators.edit', $moderator->id) }}"

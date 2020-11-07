@@ -68,4 +68,12 @@ class User extends Authenticatable
     {
         return $this->role->id === Role::whereName('Moderator')->first()->id;
     }
+
+    /**
+     * Get attendance sent by this user
+     */
+    public function attendance()
+    {
+        return $this->hasMany('\App\Models\Attendance', 'submitted_by');
+    }
 }

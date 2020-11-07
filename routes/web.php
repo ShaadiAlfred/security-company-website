@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
         return view('index');
     })->name('index');
 
+    Route::get('moderators/{user}', [ModeratorController::class, 'show'])->name('moderators.show')->middleware('can:view-moderators,user');
+
     Route::middleware('can:manage-moderators')->prefix('moderators')->group(function () {
         Route::get('/', [ModeratorController::class, 'index'])->name('moderators.index');
         Route::get('/create', [ModeratorController::class, 'create'])->name('moderators.create');

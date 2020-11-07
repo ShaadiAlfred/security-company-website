@@ -75,7 +75,12 @@ class ModeratorController extends Controller
      */
     public function show(User $user)
     {
-        return 'Show user with id: ' . $user->id;
+        $pageTitle = $user->name;
+
+        return view('moderators.show', [
+            'pageTitle' => $pageTitle,
+            'moderator' => $user,
+        ]);
     }
 
     /**

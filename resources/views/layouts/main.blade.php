@@ -122,7 +122,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                     <!-- text-->
-                                    <a href="javascript:void(0)" class="dropdown-item">
+                                    <a href="{{ route('moderators.show', auth()->user()) }}" class="dropdown-item">
                                         <i class="ti-user"></i> @lang('My Profile')
                                     </a>
                                     <!-- text-->
@@ -168,7 +168,7 @@
                             </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li>
-                                    <a href="javascript:void(0)">
+                                    <a href="{{ route('moderators.show', auth()->user()) }}">
                                         <i class="ti-user"></i> @lang('My Profile')
                                     </a>
                                 </li>
