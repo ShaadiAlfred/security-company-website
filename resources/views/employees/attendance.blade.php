@@ -67,8 +67,10 @@
 @endsection
 
 @push('javascript')
-    <x-toast.success message="Attendance sent successfully!" />
-    <x-toast.error message="Attendance was not sent successfully!" />
+    <x-toast-container>
+        <x-toast.success message="Attendance sent successfully!" />
+        <x-toast.error message="Attendance was not sent successfully!" />
+    </x-toast-container>
 
     <!-- select2 -->
     <script src="{{ asset('/js/select2/select2.full.min.js') }}"></script>

@@ -110,7 +110,9 @@
     <!-- DataTables date sorting -->
     <script src="{{ asset('/js/date_sorting_datatables.js') }}" type="text/javascript"></script>
 
-    <x-toast.success message="Employee was deleted successfully!" />
+    <x-toast-container>
+        <x-toast.success message="Employee was deleted successfully!" />
+    </x-toast-container>
 
     <script type="text/javascript">
         $(document).ready(() => {

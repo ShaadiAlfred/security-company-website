@@ -54,7 +54,9 @@
 @endsection
 
 @push('javascript')
-    <x-toast.success message="Moderator was deleted successfully!" />
+    <x-toast-container>
+        <x-toast.success message="Moderator was deleted successfully!" />
+    </x-toast-container>
 
     <script type="text/javascript">
         $(document).ready(() => {

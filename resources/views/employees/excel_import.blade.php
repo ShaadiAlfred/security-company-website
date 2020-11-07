@@ -43,7 +43,9 @@
 @endsection
 
 @push('javascript')
-    <x-toast.success message="{{ trans('Employees were imoprted successfully!') }}" />
+    <x-toast-container>
+        <x-toast.success message="{{ trans('Employees were imoprted successfully!') }}" />
+    </x-toast-container>
 
     <!-- Dropzone Plugin JavaScript -->
     <script src="{{ asset('/assets/node_modules/dropzone-master/dist/dropzone.js') }}"></script>

@@ -1,6 +1,4 @@
 <div>
-    <script src="{{ asset('/assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
-
     <script type="text/javascript">
         const showSuccess = () => {
             window.$.toast({
@@ -13,9 +11,6 @@
                 position : '{{ app()->getLocale() === 'ar' ? 'bottom-right' : 'bottom-left' }}',
             });
         };
-
-        @if ($automaticTrigger)
-            showSuccess();
-        @endif
+        {{ $automaticTrigger ? 'showSuccess();' : '' }}
     </script>
 </div>

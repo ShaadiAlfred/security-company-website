@@ -438,6 +438,8 @@
     </script>
 
     @if (session()->has('success'))
-        <x-toast.success message="{{ session('success') }}" automaticTrigger="true" />
+        <x-toast-container>
+            <x-toast.success message="{{ session('success') }}" automaticTrigger="true" />
+        </x-toast-container>
     @endif
 @endpush
