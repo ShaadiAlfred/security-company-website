@@ -211,8 +211,16 @@ class EmployeeController extends Controller
             throw new \Exception($response->body());
         }
 
-        // Change , to ، if locale === 'ar'
-        $location = str_replace(',', '،', $response->json()['display_name']);
+        $location = $response->json()['address'];
+
+        $location = [
+            $location['house_number'],
+            $location['road'],
+            $location['suburb'],
+            $location['city'],
+        ];
+
+        $location = join('، ', $location);
 
         return $location;
     }
