@@ -53,7 +53,11 @@ class Employee extends Model
     public function setHiredOnAttribute($value)
     {
         if (! is_null($value)) {
-            $this->attributes['hired_on'] = \Carbon\Carbon::createFromFormat($this->hiredOnFormat, $value);
+            if (is_a($value, 'DateTime')) {
+                $this->attributes['hired_on'] = $value;
+            } else {
+                $this->attributes['hired_on'] = \Carbon\Carbon::createFromFormat($this->hiredOnFormat, $value);
+            }
         } else {
             $this->attributes['hired_on'] = null;
         }
