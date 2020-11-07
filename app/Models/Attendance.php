@@ -31,4 +31,16 @@ class Attendance extends Model
     {
         return $this->belongsTo('\App\Models\Employee');
     }
+
+    /**
+     * Get Google Map's link to show coordinates
+     *
+     * @return string
+     */
+    public function googleMapsLink(): string
+    {
+        $coordinates = $this->latitude . ',' . $this->longitude;
+
+        return "https://www.google.com/maps/search/?api=1&query=${coordinates}";
+    }
 }

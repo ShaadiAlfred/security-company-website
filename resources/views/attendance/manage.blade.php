@@ -47,13 +47,7 @@
                                     <td>{{ $attendanceRecord->note }}</td>
                                     <td>{{ $attendanceRecord->submittedBy->name }}</td>
                                     <td>
-                                        @php
-                                        $coordinates = $attendanceRecord->latitude .
-                                                      ',' .
-                                                      $attendanceRecord->longitude;
-                                        $googleMaps  = "https://www.google.com/maps/search/?api=1&query=${coordinates}";
-                                        @endphp
-                                        <a href="{{ $googleMaps }}"
+                                        <a href="{{ $attendanceRecord->googleMapsLink() }}"
                                            target="_blank">
                                             {{ $attendanceRecord->submitted_from }}
                                         </a>
