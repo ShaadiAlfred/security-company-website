@@ -19,6 +19,11 @@
     "Logout": "تسجيل الخروج",
 
     // Sidebar nav
+
+    // // Manage Admins
+        "Manage Admins": "إدارة المديرين",
+        "Edit Admin": "التعديل على حساب المدير",
+
         // Manage Moderators
         "Manage Moderators": "إدارة المشرفين",
         "All Moderators": "كل المشرفين",
@@ -37,6 +42,9 @@
         "All Employees": "كل الموظفين",
         "Add Employee": "إضافة موظف",
         "Delete Employee": "حذف موظف",
+
+    // Manage admins
+    "Admin was updated!": "تم تحديث بيانات المدير بنجاح!",
 
     // Manage Moderators
     "Edit Moderator": "التعديل على مشرف",

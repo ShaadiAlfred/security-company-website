@@ -26,8 +26,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('view-moderators', function (User $user, User $userProfile) {
-            return $user->isAdmin() || $user->id === $userProfile->id;
+        Gate::define('edit-admins', function (User $user, User $admin) {
+            return $user->isAdmin() || $user->id === $admin->id;
+        });
+
+        Gate::define('edit-moderators', function (User $user, User $moderator) {
+            return $user->isAdmin() || $user->id === $moderator->id;
         });
 
         Gate::define('manage-moderators', function (User $user) {

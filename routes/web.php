@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ModeratorController;
@@ -26,14 +27,22 @@ Route::middleware('auth')->group(function () {
         return view('index');
     })->name('index');
 
-    Route::get('moderators/{user}', [ModeratorController::class, 'show'])->name('moderators.show')->middleware('can:view-moderators,user');
+    Route::middleware('can:edit-admins,user')->prefix('admins')->group(function () {
+        Route::get('/{user}/edit', [AdminController::class, 'edit'])->name('admins.edit');
+        Route::put('/{user}', [AdminController::class, 'update'])->name('admins.update');
+        Route::get('/{user}', [AdminController::class, 'show'])->name('admins.show');
+    });
+
+    Route::middleware('can:edit-moderators,user')->prefix('moderators')->group(function () {
+        Route::get('/{user}/edit', [ModeratorController::class, 'edit'])->name('moderators.edit');
+        Route::put('/{user}', [ModeratorController::class, 'update'])->name('moderators.update');
+        Route::get('/{user}', [ModeratorController::class, 'show'])->name('moderators.show');
+    });
 
     Route::middleware('can:manage-moderators')->prefix('moderators')->group(function () {
         Route::get('/', [ModeratorController::class, 'index'])->name('moderators.index');
         Route::get('/create', [ModeratorController::class, 'create'])->name('moderators.create');
         Route::post('/create', [ModeratorController::class, 'store'])->name('moderators.store');
-        Route::get('/{user}/edit', [ModeratorController::class, 'edit'])->name('moderators.edit');
-        Route::put('/{user}', [ModeratorController::class, 'update'])->name('moderators.update');
         Route::delete('/{user}', [ModeratorController::class, 'destroy'])->name('moderators.destroy');
 
         Route::get('/manage_attendance', [AttendanceController::class, 'manageAttendance'])->name('moderators.manage_attendance');

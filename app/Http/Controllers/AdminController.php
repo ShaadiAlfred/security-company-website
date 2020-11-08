@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class ModeratorController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,16 +14,7 @@ class ModeratorController extends Controller
      */
     public function index()
     {
-        $pageTitle = trans('All Moderators');
-
-        $moderators = User::whereHas('role', function ($q) {
-            $q->whereName('Moderator');
-        })->get();
-
-        return view('moderators.index', [
-            'pageTitle' => $pageTitle,
-            'moderators' => $moderators,
-        ]);
+        //
     }
 
     /**
@@ -36,9 +24,7 @@ class ModeratorController extends Controller
      */
     public function create()
     {
-        $pageTitle = trans('Add Moderator');
-
-        return view('moderators.create')->with('pageTitle', $pageTitle);
+        //
     }
 
     /**
@@ -49,22 +35,7 @@ class ModeratorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        User::create([
-            'name'              => $request->name,
-            'email'             => $request->email,
-            'password'          => Hash::make($request->password),
-            'role_id'           => Role::whereName('Moderator')->first()->id,
-            'email_verified_at' => now(),
-            'remember_token'    => Str::random(10),
-        ]);
-
-        return back()->with('success', 'Moderator was created successfully!');
+        //
     }
 
     /**
@@ -75,15 +46,11 @@ class ModeratorController extends Controller
      */
     public function show(User $user)
     {
-        if (! $user->isModerator()) {
-            return abort(404);
-        }
-
         $pageTitle = $user->name;
 
-        return view('moderators.show', [
+        return view('admins.show', [
             'pageTitle' => $pageTitle,
-            'moderator' => $user,
+            'admin'     => $user
         ]);
     }
 
@@ -95,11 +62,11 @@ class ModeratorController extends Controller
      */
     public function edit(User $user)
     {
-        $pageTile = trans('Edit Moderator');
+        $pageTile = trans('Edit Admin');
 
-        return view('moderators.edit', [
+        return view('admins.edit', [
             'pageTitle' => $pageTile,
-            'moderator' => $user,
+            'admin' => $user,
         ]);
     }
 
@@ -125,7 +92,7 @@ class ModeratorController extends Controller
 
         $user->update($validatedData);
 
-        return back()->with('success', 'Moderator was updated!');
+        return back()->with('success', 'Admin was updated!');
     }
 
     /**
@@ -136,8 +103,6 @@ class ModeratorController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-
-        return response('Success', 200);
+        //
     }
 }

@@ -122,15 +122,27 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                     <!-- text-->
-                                    <a href="{{ route('moderators.show', auth()->user()) }}" class="dropdown-item">
-                                        <i class="ti-user"></i> @lang('My Profile')
-                                    </a>
+                                    @if(auth()->user()->isAdmin())
+                                        <a href="{{ route('admins.show', auth()->user()) }}" class="dropdown-item">
+                                            <i class="ti-user"></i> @lang('My Profile')
+                                        </a>
+                                    @else
+                                        <a href="{{ route('moderators.show', auth()->user()) }}" class="dropdown-item">
+                                            <i class="ti-user"></i> @lang('My Profile')
+                                        </a>
+                                    @endif
                                     <!-- text-->
                                     <div class="dropdown-divider"></div>
                                     <!-- text-->
-                                    <a href="javascript:void(0)" class="dropdown-item">
-                                        <i class="ti-settings"></i> @lang('Account Settings')
-                                    </a>
+                                    @if(auth()->user()->isAdmin())
+                                        <a href="{{ route('admins.edit', auth()->user()) }}" class="dropdown-item">
+                                            <i class="ti-settings"></i> @lang('Account Settings')
+                                        </a>
+                                    @else
+                                        <a href="{{ route('moderators.edit', auth()->user()) }}" class="dropdown-item">
+                                            <i class="ti-settings"></i> @lang('Account Settings')
+                                        </a>
+                                    @endif
                                     <!-- text-->
                                     <div class="dropdown-divider"></div>
                                     <!-- text-->
@@ -168,14 +180,26 @@
                             </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li>
-                                    <a href="{{ route('moderators.show', auth()->user()) }}">
-                                        <i class="ti-user"></i> @lang('My Profile')
-                                    </a>
+                                    @if(auth()->user()->isAdmin())
+                                        <a href="{{ route('admins.show', auth()->user()) }}">
+                                            <i class="ti-user"></i> @lang('My Profile')
+                                        </a>
+                                    @else
+                                        <a href="{{ route('moderators.show', auth()->user()) }}">
+                                            <i class="ti-user"></i> @lang('My Profile')
+                                        </a>
+                                    @endif
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)">
-                                        <i class="ti-settings"></i> @lang('Account Settings')
-                                    </a>
+                                    @if(auth()->user()->isAdmin())
+                                        <a href="{{ route('admins.edit', auth()->user()) }}">
+                                            <i class="ti-settings"></i> @lang('Account Settings')
+                                        </a>
+                                    @else
+                                        <a href="{{ route('moderators.edit', auth()->user()) }}">
+                                            <i class="ti-settings"></i> @lang('Account Settings')
+                                        </a>
+                                    @endif
                                 </li>
                                 <li>
                                     <a onclick="logout()" href="javascript:void(0)">
