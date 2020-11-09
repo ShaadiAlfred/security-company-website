@@ -117,6 +117,7 @@
         // Init
         $(document).ready(() => {
             $('#employee').select2({
+                'width': '100%',
                 @if(app()->getLocale() === 'ar')
                     dir: 'rtl',
                     language: 'ar'
