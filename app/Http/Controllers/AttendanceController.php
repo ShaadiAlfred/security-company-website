@@ -14,7 +14,9 @@ class AttendanceController extends Controller
     {
         $pageTitle = trans('Manage Attendance');
 
-        $attendanceRecords = Attendance::latest()->get();
+        $attendanceRecords = Attendance::orderBy('created_at', 'desc')
+                                       ->orderBy('id', 'desc')
+                                       ->get();
 
         return view('attendance.manage', [
             'pageTitle'         => $pageTitle,

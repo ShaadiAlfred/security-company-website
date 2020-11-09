@@ -79,6 +79,7 @@
 
             // DataTables init
             const table = $('#table').DataTable({
+                ordering: false,
                 @if(app()->getLocale() === 'ar')
                     language: {
                         url: '{{ asset('/js/datatables_ar.json') }}'
