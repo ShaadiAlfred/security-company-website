@@ -33,19 +33,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/{user}', [AdminController::class, 'show'])->name('admins.show');
     });
 
-    Route::middleware('can:edit-moderators,user')->prefix('moderators')->group(function () {
-        Route::get('/{user}/edit', [ModeratorController::class, 'edit'])->name('moderators.edit');
-        Route::put('/{user}', [ModeratorController::class, 'update'])->name('moderators.update');
-        Route::get('/{user}', [ModeratorController::class, 'show'])->name('moderators.show');
-    });
+    Route::prefix('moderators')->group(function () {
+        Route::middleware('can:manage-moderators')->group(function () {
+            Route::get('/create', [ModeratorController::class, 'create'])->name('moderators.create');
+            Route::post('/create', [ModeratorController::class, 'store'])->name('moderators.store');
 
-    Route::middleware('can:manage-moderators')->prefix('moderators')->group(function () {
-        Route::get('/', [ModeratorController::class, 'index'])->name('moderators.index');
-        Route::get('/create', [ModeratorController::class, 'create'])->name('moderators.create');
-        Route::post('/create', [ModeratorController::class, 'store'])->name('moderators.store');
-        Route::delete('/{user}', [ModeratorController::class, 'destroy'])->name('moderators.destroy');
+            Route::get('/manage_attendance', [AttendanceController::class, 'manageAttendance'])->name('moderators.manage_attendance');
 
-        Route::get('/manage_attendance', [AttendanceController::class, 'manageAttendance'])->name('moderators.manage_attendance');
+            Route::delete('/{user}', [ModeratorController::class, 'destroy'])->name('moderators.destroy');
+            Route::get('/', [ModeratorController::class, 'index'])->name('moderators.index');
+        });
+
+        Route::middleware('can:edit-moderators,user')->group(function () {
+            Route::get('/{user}/edit', [ModeratorController::class, 'edit'])->name('moderators.edit');
+            Route::put('/{user}', [ModeratorController::class, 'update'])->name('moderators.update');
+            Route::get('/{user}', [ModeratorController::class, 'show'])->name('moderators.show');
+        });
     });
 
     Route::resource('job_locations', JobLocationController::class)->middleware('can:manage-job-locations');
