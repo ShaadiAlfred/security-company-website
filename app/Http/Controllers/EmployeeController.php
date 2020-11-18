@@ -221,13 +221,13 @@ class EmployeeController extends Controller
         $location = $response->json()['address'];
 
         $location = [
-            $location['house_number'],
-            $location['road'],
-            $location['suburb'],
-            $location['city'],
+            $location['house_number'] ?? '',
+            $location['road'] ?? '',
+            $location['suburb'] ?? '',
+            $location['city'] ?? '',
         ];
 
-        $location = join('، ', $location);
+        $location = trim(join('، ', $location), '، ');
 
         return $location;
     }
