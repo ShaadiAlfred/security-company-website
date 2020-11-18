@@ -8,6 +8,7 @@ use App\Models\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -181,9 +182,13 @@ class EmployeeController extends Controller
 
             return response('Success', 200);
         } catch (\Exception $e) {
+            $errorMessage = $e->getMessage() . '. On line: ' . $e->getLine() . '. In file: ' . $e->getFile();
+
+            Log::error('Error in submitting attendance: ' . $errorMessage);
+
             return response([
                 'Message' => 'Failure',
-                'Error' => $e->getMessage() . '. On line: ' . $e->getLine() . '. In file: ' . $e->getFile(),
+                'Error' => $errorMessage,
             ], 400);
         }
 
