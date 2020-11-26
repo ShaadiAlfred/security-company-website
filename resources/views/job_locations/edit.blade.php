@@ -20,7 +20,7 @@
                     <h4 class="card-title">
                         @lang('Edit Job Location')
                     </h4>
-                    <form action="{{ route('job_locations.update', $jobLocation->id) }}" method="POST" class="mt-4">
+                    <form action="{{ route('job_locations.update', $jobLocation) }}" method="POST" class="mt-4">
                         @csrf
                         @method('PUT')
                         <div class="form-group">

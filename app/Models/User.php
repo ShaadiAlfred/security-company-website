@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public static $picturesPath = 'profile-pictures/';
 
     /**
      * The attributes that are mass assignable.
@@ -75,5 +78,10 @@ class User extends Authenticatable
     public function attendance()
     {
         return $this->hasMany('\App\Models\Attendance', 'submitted_by');
+    }
+
+    public function getPicturePath(): string
+    {
+        return 'storage/' . static::$picturesPath . $this->picture;
     }
 }

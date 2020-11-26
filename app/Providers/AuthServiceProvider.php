@@ -42,6 +42,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
+        Gate::define('manage-employees-salary', function (User $user) {
+            return $user->isAdmin();
+        });
+
         Gate::define('manage-employees', function (User $user) {
             return $user->isAdmin() || $user->isModerator();
         });

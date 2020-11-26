@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeesSalaryController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\JobLocationController;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,10 @@ Route::middleware('auth')->group(function () {
         Route::post('import', [EmployeeController::class, 'storeFromExcel'])->name('employees.storeFromExcel');
         Route::get('attendance', [EmployeeController::class, 'attendance'])->name('employees.attendance');
         Route::post('attendance', [EmployeeController::class, 'submitAttendance'])->name('employees.submitAttendance');
+    });
+
+    Route::prefix('employees/salary')->middleware('can:manage-employees-salary')->group(function () {
+        Route::get('/', [EmployeesSalaryController::class, 'show'])->name('employees.salary.index');
     });
 
     Route::resource('employees', EmployeeController::class)->middleware('can:manage-employees');

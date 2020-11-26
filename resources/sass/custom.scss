@@ -1,4 +1,41 @@
+// Boostrap Datepicker
 .mydatepicker {
     cursor: pointer;
     caret-color: transparent;
+}
+
+// Eliteadmin custom file upload
+.custom-file input[type="file"] {
+    cursor: pointer;
+}
+
+// select2
+.select2-selection,
+.select2-selection__arrow {
+    height: calc(1.5em + .75rem + 2px) !important;
+}
+
+// profile picture preview
+#picture-preview {
+    max-height: 18rem;
+    display: block;
+    border-radius: 50%;
+    margin: auto;
+    padding: 1rem;
+}
+
+// profile picture in table
+.profile-picture {
+    display: block;
+    height: 6rem;
+    width: auto;
+    border-radius: 50%;
+}
+
+// employee profile picture in attendance table
+.employee-profile-picture {
+    width: 4rem;
+    height: auto;
+    border-radius: 50%;
+    padding: 0.5rem;
 }

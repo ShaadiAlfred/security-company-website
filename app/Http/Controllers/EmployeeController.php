@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use App\Imports\EmployeesImport;
 use App\Models\Attendance;
 use App\Models\Employee;
-use Carbon\Carbon;
+use App\Models\JobLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
+    private function getPicturesPath(): string
+    {
+        return Employee::$picturesPath;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +45,12 @@ class EmployeeController extends Controller
     {
         $pageTitle = trans('Add Employee');
 
-        return view('employees.create')->with('pageTitle', $pageTitle);
+        $jobLocations = JobLocation::all();
+
+        return view('employees.create', [
+          'pageTitle'    => $pageTitle,
+          'jobLocations' => $jobLocations,
+        ]);
     }
 
     /**
@@ -52,7 +63,19 @@ class EmployeeController extends Controller
     {
         $validatedData = $request->validate($this->getValidationRules());
 
-        Employee::create($validatedData);
+        $employee = Employee::create($validatedData);
+
+        if ($request->hasFile('picture')) {
+            $validatedPicture = $request->validate([
+                'picture' => 'image',
+            ]);
+
+            $savedPicture = Storage::disk('public')
+                                ->put($this->getPicturesPath(), $validatedPicture['picture']);
+
+            $employee->picture = basename($savedPicture);
+            $employee->save();
+        }
 
         return back()->with('success', 'Employee was created successfully!');
     }
@@ -78,9 +101,12 @@ class EmployeeController extends Controller
     {
         $pageTitle = trans('Edit Employee');
 
+        $jobLocations = JobLocation::all();
+
         return view('employees.edit', [
-            'pageTitle' => $pageTitle,
-            'employee'  => $employee,
+            'pageTitle'    => $pageTitle,
+            'employee'     => $employee,
+            'jobLocations' => $jobLocations,
         ]);
     }
 
@@ -96,6 +122,22 @@ class EmployeeController extends Controller
         $validatedData = $request->validate($this->getValidationRules($employee->id));
 
         $employee->update($validatedData);
+
+        if ($request->hasFile('picture')) {
+            $validatedPicture = $request->validate([
+                'picture' => 'image',
+            ]);
+            $validatedPicture = $validatedPicture['picture'];
+
+            $newPicture = basename(Storage::disk('public')->put($this->getPicturesPath(), $validatedPicture));
+
+            if ($employee->picture !== 'default.png') {
+                Storage::disk('public')->delete($this->getPicturesPath() . $employee->picture);
+            }
+
+            $employee->picture = $newPicture;
+            $employee->save();
+        }
 
         return back()->with('success', 'Employee was updated!');
     }
@@ -148,7 +190,7 @@ class EmployeeController extends Controller
     public function attendance(): \Illuminate\View\View
     {
         $pageTitle = trans('Attendance');
-        $employees = Employee::get(['id', 'name']);
+        $employees = Employee::get(['id', 'number', 'name']);
 
         return view('employees.attendance', [
             'pageTitle' => $pageTitle,
@@ -166,6 +208,7 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'employeeId' => 'required',
+            'isPresent' => 'required',
         ]);
 
         try {
@@ -173,6 +216,7 @@ class EmployeeController extends Controller
 
             Attendance::create([
                 'employee_id'    => $request->employeeId,
+                'is_present'     => $request->boolean('isPresent'),
                 'note'           => $request->note,
                 'submitted_by'   => $request->user()->id,
                 'submitted_from' => $location,
@@ -238,31 +282,41 @@ class EmployeeController extends Controller
      * @param int $uniqueId
      * @return array
      */
-    public function getValidationRules(int $uniqueId = null): array
+    public function getValidationRules(int $exceptId = null): array
     {
         return [
-            'name'           => 'required|max:64',
-            'national_id'    => 'required|max:64|unique:employees,national_id' . ($uniqueId ? ',' . $uniqueId : ''),
-            'address'        => 'required|max:128',
-            'phone'          => 'required|max:64',
-            'age'            => 'required|digits_between:1,3|max:255',
-            'notes'          => 'max:64',
-            'job_location'   => 'required|max:32',
-            'section'        => 'required|max:64',
-            'hired_on'       => 'required|date_format:d/m/Y',
-            'status'         => 'max:1',
-            '3ohda'          => 'max:16',
-            'kashf_amny'     => 'max:16',
-            'no3_el_mo5alfa' => 'max:64',
-            'pants'          => 'max:32',
-            'summer_t_shirt' => 'max:32',
-            'winter_t_shirt' => 'max:32',
-            'jacket'         => 'max:32',
-            'shoes'          => 'max:32',
-            'vest'           => 'max:32',
-            'eish'           => 'max:32',
-            'donk'           => 'max:32',
-            'notes_2'        => 'max:32',
+            'name'        => 'required|max:64',
+            'national_id' => [
+                'required',
+                'numeric',
+                'digits_between:1,64',
+                'unique:employees,national_id' . ($exceptId ? ",$exceptId" : ''),
+            ],
+            'number' => [
+                'required',
+                'numeric',
+                'unique:employees,number' . ($exceptId ? ",$exceptId" : ''),
+            ],
+            'address'         => 'required|max:128',
+            'phone'           => 'required|max:64',
+            'age'             => 'required|digits_between:1,3|max:255',
+            'notes'           => 'max:64',
+            'job_location_id' => 'required|exists:job_locations,id',
+            'section'         => 'required|max:64',
+            'hired_on'        => 'required|date_format:d/m/Y',
+            'status'          => 'max:1',
+            '3ohda'           => 'max:16',
+            'kashf_amny'      => 'max:16',
+            'no3_el_mo5alfa'  => 'max:64',
+            'pants'           => 'max:32',
+            'summer_t_shirt'  => 'max:32',
+            'winter_t_shirt'  => 'max:32',
+            'jacket'          => 'max:32',
+            'shoes'           => 'max:32',
+            'vest'            => 'max:32',
+            'eish'            => 'max:32',
+            'donk'            => 'max:32',
+            'notes_2'         => 'max:32',
         ];
     }
 }

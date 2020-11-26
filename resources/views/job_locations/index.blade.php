@@ -35,7 +35,7 @@
                                     <td>{{ $location->hourly_wage }}</td>
                                     <td>
                                         <div class="button-group">
-                                            <a href="{{ route('job_locations.edit', $location->id) }}"
+                                            <a href="{{ route('job_locations.edit', $location) }}"
                                             class="btn waves-effect waves-light btn-info">
                                                 @lang('Edit')
                                             </a>

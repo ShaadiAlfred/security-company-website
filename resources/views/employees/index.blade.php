@@ -27,7 +27,8 @@
                         <thead>
                             <tr>
                                 <th class="text-nowrap">@lang('Action')</th>
-                                <th>@lang('Id')</th>
+                                <th>@lang('Number')</th>
+                                <th>@lang('Profile Picture')</th>
                                 <th>@lang('Name')</th>
                                 <th>@lang('National ID')</th>
                                 <th>@lang('Address')</th>
@@ -57,7 +58,7 @@
                                 <tr>
                                     <td>
                                         <div class="button-group">
-                                            <a href="{{ route('employees.edit', $employee->id) }}"
+                                            <a href="{{ route('employees.edit', $employee) }}"
                                             class="btn waves-effect waves-light btn-info">
                                                 @lang('Edit')
                                             </a>
@@ -67,14 +68,22 @@
                                             </button>
                                         </div>
                                     </td>
-                                    <td>{{ $employee->id }}</td>
+                                    <td>
+                                        {{ $employee->number }}
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <img src="{{ asset($employee->getPicturePath()) }}"
+                                                 class="profile-picture" />
+                                        </div>
+                                    </td>
                                     <td>{{ $employee->name }}</td>
                                     <td>{{ $employee->national_id }}</td>
                                     <td>{{ $employee->address }}</td>
                                     <td>{{ $employee->phone }}</td>
                                     <td>{{ $employee->age }}</td>
                                     <td>{{ $employee->notes }}</td>
-                                    <td>{{ $employee->job_location }}</td>
+                                    <td>{{ $employee->job_location->name }}</td>
                                     <td>{{ $employee->section }}</td>
                                     <td>{{ $employee['3ohda'] }}</td>
                                     <td>{{ $employee->hired_on }}</td>
@@ -121,6 +130,13 @@
 
             // DataTables init
             const table = $('#table').DataTable({
+                order: [],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        orderable: false
+                    }
+                ],
                 @if(app()->getLocale() === 'ar')
                     language: {
                         url: '{{ asset('/js/datatables_ar.json') }}'

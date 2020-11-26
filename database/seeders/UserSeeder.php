@@ -27,9 +27,20 @@ class UserSeeder extends Seeder
         ]);
         $this->command->info('Admin user was created!');
 
+        User::create([
+            'name'              => 'Moderator',
+            'email'             => 'mod@mods.com',
+            'email_verified_at' => now(),
+            'password'          => Hash::make('password'),
+            'role_id'           => Role::whereName('Moderator')->first()->id,
+            'remember_token'    => Str::random(10),
+        ]);
+        $this->command->info('Moderator user was created!');
+
         // Moderators
         User::factory()->count(5)->create([
             'role_id' => Role::whereName('Moderator')->first()->id,
+            'password' => Hash::make('password'),
         ]);
         $this->command->info('5 moderators were created!');
     }

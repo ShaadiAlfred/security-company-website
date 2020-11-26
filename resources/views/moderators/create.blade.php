@@ -20,7 +20,8 @@
                     <h4 class="card-title">
                         @lang('Add Moderator')
                     </h4>
-                    <form action="{{ route('moderators.store') }}" method="POST" class="mt-4">
+                    <form action="{{ route('moderators.store') }}" method="POST" class="mt-4"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="name">
@@ -67,6 +68,34 @@
                             <input name="password_confirmation" type="password" class="form-control"
                                    id="password-confirm" placeholder="@lang('Password')" required>
                         </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input id="picture"
+                                               name="picture"
+                                               type="file"
+                                               class="custom-file-input @error('picture') is-invalid @enderror"
+                                               accept="image/*">
+                                        <label class="custom-file-label" for="picture">
+                                            @lang('Choose Profile Picture')
+                                        </label>
+                                        @error('picture')
+                                            <small class="form-control-feedback">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row picture-preview d-none">
+                            <div class="col">
+                                <img id="picture-preview" />
+                            </div>
+                        </div>
+                        <br />
+
                         <button type="submit" class="btn btn-primary">
                             @lang('Add Moderator')
                         </button>
@@ -78,6 +107,36 @@
 @endsection
 
 @push('javascript')
+
+    <script>
+        (function showPicturePreview() {
+            const pictureInput            = document.querySelector('#picture');
+            const previewElement          = document.querySelector('#picture-preview');
+            const picturePreviewContainer = document.querySelector('.picture-preview');
+
+            const fileReader = new FileReader();
+
+            fileReader.onload = (e) => {
+                previewElement.src = e.target.result;
+            };
+
+            pictureInput.addEventListener('change', () => {
+                if (pictureInput.files.length) {
+                    picturePreviewContainer.classList.remove('d-none');
+                    fileReader.readAsDataURL(pictureInput.files[0]);
+                } else {
+                    picturePreviewContainer.classList.add('d-none');
+                }
+            });
+        })();
+
+        $(() => {
+            $('#picture').change(function() {
+                const file = $('#picture')[0].files[0].name;
+                $(this).next('label').text(file);
+            });
+        });
+    </script>
     @if (session()->has('success'))
         <x-toast-container>
             <x-toast.success message="{{ session('success') }}" automaticTrigger="true" />

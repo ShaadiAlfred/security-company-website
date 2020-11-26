@@ -9,6 +9,8 @@ class Employee extends Model
 {
     use HasFactory;
 
+    public static $picturesPath = 'profile-pictures/employees/';
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -29,6 +31,23 @@ class Employee extends Model
      * The date format of $hired_on
      */
     private $hiredOnFormat = 'd/m/Y';
+
+    /**
+     * Job Location relationship
+     */
+    public function job_location()
+    {
+        return $this->belongsTo('\App\Models\JobLocation');
+    }
+
+    /**
+     * Attendance relationship
+     */
+    public function attendance()
+    {
+        return $this->hasMany('\App\Models\Attendance');
+    }
+
 
     /**
      * Get the date when the employee was hired
@@ -61,5 +80,10 @@ class Employee extends Model
         } else {
             $this->attributes['hired_on'] = null;
         }
+    }
+
+    public function getPicturePath(): string
+    {
+        return 'storage/' . static::$picturesPath . $this->picture;
     }
 }

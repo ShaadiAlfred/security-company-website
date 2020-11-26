@@ -3,6 +3,8 @@
 @push('stylesheets')
     <!-- select2 -->
     <link rel="stylesheet" href="{{ asset('/css/select2.min.css') }}" type="text/css" media="screen" />
+    <!-- swtichery -->
+    <link rel="stylesheet" href="{{ asset('/assets/node_modules/switchery/dist/switchery.min.css') }}" type="text/css" media="screen" />
 @endpush
 
 @push('breadcrumb')
@@ -35,7 +37,9 @@
                                     </label>
                                     <select id="employee" name="employee" required>
                                         @foreach($employees as $employee)
-                                            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                            <option value="{{ $employee->id }}">
+                                                {{ $employee->number . ' - ' . $employee->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -47,6 +51,30 @@
                                     </label>
                                     <input class="form-control" id="note" name="note" placeholder="@lang('Note')"
                                            maxlength="128" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="is_present" class="m-t-20">
+                                        @lang('Is present?')
+                                    </label>
+                                    <br />
+                                    <div class="d-flex pr-5" style="align-items: center;">
+                                        <label class="m-0 ml-3">@lang('Present')</label>
+
+                                        <input id="is_present"
+                                               name="is_present"
+                                               type="checkbox"
+                                               class="js-switch"
+                                               data-size="large"
+                                               data-color="#f62d51"
+                                               checked>
+
+                                        <label class="m-0 mr-3">@lang('Absent')</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +104,9 @@
     <script src="{{ asset('/js/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('/js/select2/i18n/ar.js') }}"></script>
 
+    <!-- swtichery -->
+    <script src="{{ asset('/assets/node_modules/switchery/dist/switchery.min.js') }}"></script>
+
     <script type="text/javascript">
         async function getCurrentLocation(event) {
             event.preventDefault();
@@ -99,12 +130,14 @@
 
             const employeeId = $('#employee').val();
             const note = $('#note').val();
+            const isPresent = document.querySelector('#is_present').checked;
 
             $.ajax({
                 method: 'POST',
                 url: submitAttendanceUrl,
                 data: {
                     employeeId: employeeId,
+                    isPresent: isPresent,
                     note: note,
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude,
@@ -116,13 +149,18 @@
 
         // Init
         $(document).ready(() => {
+            // Switchery
+            document.querySelectorAll('.js-switch').forEach(element => {
+                new Switchery(element, element.dataset);
+            });
+
             $('#employee').select2({
                 'width': '100%',
                 @if(app()->getLocale() === 'ar')
                     dir: 'rtl',
                     language: 'ar'
                 @endif
-            })
+            });
         });
 
     </script>

@@ -152,6 +152,7 @@ return [
         'password'    => 'كلمة المرور',
         'name'        => 'إسم',
         'national_id' => 'رقم قومي',
+        'number'      => 'رقم',
     ],
 
 ];

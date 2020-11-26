@@ -7,9 +7,18 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ModeratorController extends Controller
 {
+    /**
+     * Get the path of users' profile pictures
+     */
+    private function getPicturesPath(): string
+    {
+        return User::$picturesPath;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +64,7 @@ class ModeratorController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        User::create([
+        $user = User::create([
             'name'              => $request->name,
             'email'             => $request->email,
             'password'          => Hash::make($request->password),
@@ -63,6 +72,18 @@ class ModeratorController extends Controller
             'email_verified_at' => now(),
             'remember_token'    => Str::random(10),
         ]);
+
+        if ($request->hasFile('picture')) {
+            $validatedPicture = $request->validate([
+                'picture' => 'image'
+            ]);
+
+            $savedPicture = basename(Storage::disk('public')
+                                ->put($this->getPicturesPath(), $validatedPicture['picture']));
+
+            $user->picture = $savedPicture;
+            $user->save();
+        }
 
         return back()->with('success', 'Moderator was created successfully!');
     }
@@ -123,7 +144,27 @@ class ModeratorController extends Controller
 
         $validatedData = $request->validate($validationRules);
 
+        if (array_key_exists('password', $validatedData)) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
+
         $user->update($validatedData);
+
+        if ($request->hasFile('picture')) {
+            $validatedPicture = $request->validate([
+                'picture' => 'image'
+            ]);
+            $validatedPicture = $validatedPicture['picture'];
+
+            $savedPicture = basename(Storage::disk('public')->put($this->getPicturesPath(), $validatedPicture));
+
+            if ($user->picture !== 'default.png') {
+                Storage::disk('public')->delete($this->getPicturesPath() . $user->picture);
+            }
+
+            $user->picture = $savedPicture;
+            $user->save();
+        }
 
         return back()->with('success', 'Moderator was updated!');
     }

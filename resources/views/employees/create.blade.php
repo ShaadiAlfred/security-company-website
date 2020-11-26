@@ -3,6 +3,8 @@
 @push('stylesheets')
     <!-- Date picker plugins css -->
     <link href="{{ asset('/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- select2 -->
+    <link rel="stylesheet" href="{{ asset('/css/select2.min.css') }}" type="text/css" media="screen" />
 @endpush
 
 @push('breadcrumb')
@@ -25,9 +27,53 @@
                     <h4 class="card-title">
                         @lang('Add Employee')
                     </h4>
-                    <form action="{{ route('employees.store') }}" method="POST" class="mt-4">
+                    <form action="{{ route('employees.store') }}" method="POST" class="mt-4"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input id="picture"
+                                               name="picture"
+                                               type="file"
+                                               class="custom-file-input @error('picture') is-invalid @enderror"
+                                               accept="image/*">
+                                        <label class="custom-file-label" for="picture">
+                                            @lang('Choose Profile Picture')
+                                        </label>
+                                        @error('picture')
+                                            <small class="form-control-feedback">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row picture-preview d-none">
+                            <div class="col">
+                                <img id="picture-preview" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="number">
+                                        @lang('Employee Number')
+                                    </label>
+                                    <input name="number" type="number" id="number" required
+                                           class="form-control @error('number') is-invalid @enderror"
+                                           placeholder="@lang('Employee Number')"
+                                           value="{{ old('number') }}">
+                                    @error('number')
+                                        <small class="form-control-feedback">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="name">
@@ -132,14 +178,24 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="job_location">
+                                    <label for="job_location_id">
                                         @lang('Job Location')
                                     </label>
+                                    <select id="job_location_id" name="job_location_id"
+                                            class="form-control" required>
+                                        @foreach($jobLocations as $jobLocation)
+                                            <option value="{{ $jobLocation->id }}">
+                                                {{ $jobLocation->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    {{--
                                     <input name="job_location" type="text" maxlength="32"
                                            class="form-control @error('job_location') is-invalid @enderror" required
                                            id="job_location" placeholder="@lang('Job Location')"
                                            value="{{ old('job_location') }}">
-                                    @error('job_location')
+                                    --}}
+                                    @error('job_location_id')
                                         <small class="form-control-feedback">
                                             {{ $message }}
                                         </small>
@@ -151,7 +207,7 @@
                                     <label for="section">
                                         @lang('Section')
                                     </label>
-                                    <input name="section" type="text" id="section" required maxlength="64"
+                                    <input name="section" type="text" id="section" required maxlength="32"
                                            class="form-control @error('section') is-invalid @enderror"
                                            placeholder="@lang('Section')"
                                            value="{{ old('section') }}">
@@ -417,28 +473,78 @@
 @push('javascript')
     <!-- Date picker -->
     <script src="{{ asset('/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <!-- select2 -->
+    <script src="{{ asset('/js/select2/select2.full.min.js') }}"></script>
     @if(app()->getLocale() === 'ar')
         <script src="{{ asset('/js/bootstrap-datepicker-ar.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('/js/select2/i18n/ar.js') }}"></script>
     @endif
 
     <script type="text/javascript">
+        function showPicturePreview() {
+            const pictureInput            = document.querySelector('#picture');
+            const previewElement          = document.querySelector('#picture-preview');
+            const picturePreviewContainer = document.querySelector('.picture-preview');
+
+            const fileReader = new FileReader();
+
+            fileReader.onload = (e) => {
+                previewElement.src = e.target.result;
+            };
+
+            pictureInput.addEventListener('change', () => {
+                if (pictureInput.files.length) {
+                    picturePreviewContainer.classList.remove('d-none');
+                    fileReader.readAsDataURL(pictureInput.files[0]);
+                } else {
+                    picturePreviewContainer.classList.add('d-none');
+                }
+            });
+        }
+
         $(document).ready(() => {
             $('.mydatepicker').datepicker({
                 autoclose: true,
                 format: 'dd/mm/yyyy',
                 immediateUpdates: true,
                 todayBtn: 'linked',
+                orientation: 'bottom',
                 @if(app()->getLocale() === 'ar')
                     rtl: true,
                     language: 'ar',
                 @endif
             });
+
+            $('.mydatepicker').datepicker('update', new Date);
+
+            $('#job_location_id').select2({
+                width: '100%',
+                @if(app()->getLocale() === 'ar')
+                    dir: 'rtl',
+                    language: 'ar'
+                @endif
+            });
+
+            showPicturePreview();
+
+            $('#picture').change(function() {
+                const file = $('#picture')[0].files[0].name;
+                $(this).next('label').text(file);
+            });
         });
     </script>
 
-    @if (session()->has('success'))
+    @if(session()->has('success'))
         <x-toast-container>
             <x-toast.success message="{{ session('success') }}" automaticTrigger="true" />
+        </x-toast-container>
+    @endif
+
+    @if($errors->any())
+        <x-toast-container>
+            @foreach ($errors->all() as $error)
+                <x-toast.error message="{{ $error }}" automaticTrigger="true" />
+            @endforeach
         </x-toast-container>
     @endif
 @endpush

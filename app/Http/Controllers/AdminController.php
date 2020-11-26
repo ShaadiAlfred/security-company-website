@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+    /**
+     * Get the path of users' profile pictures
+     */
+    private function getPicturesPath(): string
+    {
+        return User::$picturesPath;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -90,7 +100,27 @@ class AdminController extends Controller
 
         $validatedData = $request->validate($validationRules);
 
+        if (array_key_exists('password', $validatedData)) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
+
         $user->update($validatedData);
+
+        if ($request->hasFile('picture')) {
+            $validatedPicture = $request->validate([
+                'picture' => 'image'
+            ]);
+            $validatedPicture = $validatedPicture['picture'];
+
+            $savedPicture = basename(Storage::disk('public')->put($this->getPicturesPath(), $validatedPicture));
+
+            if ($user->picture !== 'default.png') {
+                Storage::disk('public')->delete($this->getPicturesPath() . $user->picture);
+            }
+
+            $user->picture = $savedPicture;
+            $user->save();
+        }
 
         return back()->with('success', 'Admin was updated!');
     }

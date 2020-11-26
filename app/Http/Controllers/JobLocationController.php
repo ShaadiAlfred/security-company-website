@@ -91,7 +91,7 @@ class JobLocationController extends Controller
     public function update(Request $request, JobLocation $jobLocation)
     {
         $request->validate([
-            'name'        => 'required|alpha_num|min:3|max:255|unique:job_locations,name,' . $jobLocation->name,
+            'name'        => 'required|alpha_num|min:3|max:255|unique:job_locations,name,' . $jobLocation->id,
             'hourly_wage' => 'required|numeric|max:9999.99'
         ]);
 

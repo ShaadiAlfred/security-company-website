@@ -115,7 +115,7 @@
                             <li class="nav-item dropdown u-pro">
                                 <a class="nav-link dropdown-toggle waves-effect waves-dark profile-pic" href=""
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ asset('storage/profile-pictures/default.png') }}" alt="user" class="">
+                                    <img src="{{ asset(auth()->user()->getPicturePath()) }}" alt="user" class="">
                                     <span class="hidden-md-down">
                                         {{ Auth::user()->name }} &nbsp;<i class="fa fa-angle-down"></i>
                                     </span>
@@ -173,7 +173,7 @@
                     <ul id="sidebarnav">
                         <li class="user-pro">
                             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                <img src="{{ asset('storage/profile-pictures/default.png') }}" alt="user-img" class="img-circle">
+                                <img src="{{ asset(auth()->user()->getPicturePath()) }}" alt="user-img" class="img-circle">
                                 <span class="hide-menu">
                                     {{ Auth::user()->name }}
                                 </span>

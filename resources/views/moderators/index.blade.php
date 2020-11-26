@@ -27,17 +27,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($moderators as $id => $moderator)
+                            @foreach($moderators as $moderator)
                                 <tr>
-                                    <td>{{ ++$id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <a href="{{ route('moderators.show', $moderator) }}">
-                                            {{ $moderator->name }}
+                                            <div class="flex align-items-center">
+                                                <img src="{{ asset($moderator->getPicturePath()) }}"
+                                                     class="employee-profile-picture" />
+                                                {{ $moderator->name }}
+                                            </div>
                                         </a>
                                     </td>
                                     <td>
                                         <div class="button-group">
-                                            <a href="{{ route('moderators.edit', $moderator->id) }}"
+                                            <a href="{{ route('moderators.edit', $moderator) }}"
                                             class="btn waves-effect waves-light btn-info">
                                                 @lang('Edit')
                                             </a>

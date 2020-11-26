@@ -7,6 +7,9 @@
         table tbody td:last-child {
             direction: ltr
         }
+        table tbody td {
+            vertical-align: middle !important;
+        }
     </style>
 @endpush
 
@@ -31,7 +34,9 @@
                     <table id="table" class="table table-striped">
                         <thead>
                             <tr>
-                                <th>@lang('Id')</th>
+                                <th>@lang('#')</th>
+                                <th>@lang('Employee Number')</th>
+                                <th>@lang('Attendance')</th>
                                 <th>@lang('Employee')</th>
                                 <th>@lang('Note')</th>
                                 <th>@lang('Submitted By')</th>
@@ -42,10 +47,26 @@
                         <tbody>
                             @foreach($attendanceRecords as $attendanceRecord)
                                 <tr>
-                                    <td>{{ $attendanceRecord->id }}</td>
-                                    <td>{{ $attendanceRecord->employee->name }}</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $attendanceRecord->employee->number }}</td>
+                                    <td>
+                                        {{ $attendanceRecord->is_present ? __('Present') : __('Absent') }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('employees.edit', $attendanceRecord->employee) }}">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ asset($attendanceRecord->employee->getPicturePath()) }}"
+                                                     class="employee-profile-picture" />
+                                                {{ $attendanceRecord->employee->name }}
+                                            </div>
+                                        </a>
+                                    </td>
                                     <td>{{ $attendanceRecord->note }}</td>
-                                    <td>{{ $attendanceRecord->submittedBy->name }}</td>
+                                    <td>
+                                        <a href="{{ route('moderators.show', $attendanceRecord->submittedBy) }}">
+                                            {{ $attendanceRecord->submittedBy->name }}
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="{{ $attendanceRecord->googleMapsLink() }}"
                                            target="_blank">
@@ -79,7 +100,8 @@
 
             // DataTables init
             const table = $('#table').DataTable({
-                ordering: false,
+                ordering: true,
+                order: [],
                 @if(app()->getLocale() === 'ar')
                     language: {
                         url: '{{ asset('/js/datatables_ar.json') }}'
