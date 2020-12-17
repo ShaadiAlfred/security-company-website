@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Users table has been seeded!');
         $this->call([JobLocationSeeder::class]);
         $this->command->info('Job locations table has been seeded!');
+        $this->call([JobShiftSeeder::class]);
+        $this->command->info('Job shifts table has been seeded!');
         $this->call([EmployeeSeeder::class]);
         $this->command->info('Employees table has been seeded!');
         $this->call([AttendanceSeeder::class]);

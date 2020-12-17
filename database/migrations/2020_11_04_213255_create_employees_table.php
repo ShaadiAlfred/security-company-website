@@ -23,6 +23,7 @@ class CreateEmployeesTable extends Migration
             $table->unsignedTinyInteger('age')->nullable();
             $table->string('notes', 64)->nullable();
             $table->foreignId('job_location_id')->references('id')->on('job_locations')->nullable(); // الموقع
+            $table->foreignId('job_shift_id')->references('id')->on('job_shifts')->nullable();
             $table->string('section', 32)->nullable();
             $table->string('3ohda', 16)->nullable();
             $table->date('hired_on')->nullable();

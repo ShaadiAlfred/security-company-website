@@ -6,6 +6,7 @@ use App\Imports\EmployeesImport;
 use App\Models\Attendance;
 use App\Models\Employee;
 use App\Models\JobLocation;
+use App\Models\JobShift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -47,9 +48,12 @@ class EmployeeController extends Controller
 
         $jobLocations = JobLocation::all();
 
+        $jobShifts = JobShift::all();
+
         return view('employees.create', [
           'pageTitle'    => $pageTitle,
           'jobLocations' => $jobLocations,
+          'jobShifts'    => $jobShifts,
         ]);
     }
 
@@ -103,10 +107,13 @@ class EmployeeController extends Controller
 
         $jobLocations = JobLocation::all();
 
+        $jobShifts = JobShift::all();
+
         return view('employees.edit', [
             'pageTitle'    => $pageTitle,
             'employee'     => $employee,
             'jobLocations' => $jobLocations,
+            'jobShifts'    => $jobShifts,
         ]);
     }
 
@@ -302,6 +309,7 @@ class EmployeeController extends Controller
             'age'             => 'required|digits_between:1,3|max:255',
             'notes'           => 'max:64',
             'job_location_id' => 'required|exists:job_locations,id',
+            'job_shift_id'    => 'required|exists:job_shifts,id',
             'section'         => 'required|max:64',
             'hired_on'        => 'required|date_format:d/m/Y',
             'status'          => 'max:1',

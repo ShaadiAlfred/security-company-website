@@ -463,6 +463,29 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="job_shift_id">
+                                        @lang('Job Shift')
+                                    </label>
+                                    <select id="job_shift_id" name="job_shift_id"
+                                            class="form-control" required>
+                                        @foreach($jobShifts as $jobShift)
+                                            <option value="{{ $jobShift->id }}"
+                                                    {{ $employee->job_shift->id === $jobShift->id ? 'selected' : '' }}>
+                                                {{ $jobShift->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('job_shift_id')
+                                        <small class="form-control-feedback">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">
                             @lang('Update Employee')
                         </button>

@@ -208,7 +208,8 @@
                                 </li>
                             </ul>
                         </li>
-                        @if(Auth::user()->isAdmin())
+
+                        @can('manage-moderators')
                             <li>
                                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
                                 aria-expanded="false">
@@ -223,6 +224,9 @@
                                     <li><a href="{{ route('moderators.manage_attendance') }}">@lang('Manage Attendance')</a></li>
                                 </ul>
                             </li>
+                        @endcan
+
+                        @can('manage-job-locations')
                             <li>
                                 <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
                                 aria-expanded="false">
@@ -240,7 +244,27 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif
+                        @endcan
+
+                        @can('manage-job-shifts')
+                            <li>
+                                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                                aria-expanded="false">
+                                    <i class="ti-time"></i>
+                                    <span class="hide-menu">
+                                        @lang('Manage Job Shifts')
+                                    </span>
+                                </a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li>
+                                        <a href="{{ route('job_shifts.index') }}">@lang('All Job Shifts')</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('job_shifts.create') }}">@lang('Add Job Shift')</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
 
                         @can('manage-employees')
                             <li>
@@ -256,6 +280,17 @@
                                     <li><a href="{{ route('employees.create') }}">@lang('Add Employee')</a></li>
                                     <li><a href="{{ route('employees.showExcelForm') }}">@lang('Import Excel Files')</a></li>
                                     <li><a href="{{ route('employees.attendance') }}">@lang('Attendance')</a></li>
+
+                                    @can('manage-employees-salary')
+                                        <li>
+                                            <a href="{{ route('employees.salary.index') }}">
+                                                <i class="ti-money"></i>
+                                                <span class="hide-menu">
+                                                    @lang('Salary')
+                                                </span>
+                                            </a>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </li>
                         @endcan

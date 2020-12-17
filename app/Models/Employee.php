@@ -41,13 +41,20 @@ class Employee extends Model
     }
 
     /**
+     * Job Shift relationship
+     */
+    public function job_shift()
+    {
+        return $this->belongsTo('\App\Models\JobShift');
+    }
+
+    /**
      * Attendance relationship
      */
     public function attendance()
     {
         return $this->hasMany('\App\Models\Attendance');
     }
-
 
     /**
      * Get the date when the employee was hired

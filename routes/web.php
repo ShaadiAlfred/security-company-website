@@ -6,6 +6,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeesSalaryController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\JobLocationController;
+use App\Http\Controllers\JobShiftController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('job_locations', JobLocationController::class)->middleware('can:manage-job-locations');
 
+    Route::resource('job_shifts', JobShiftController::class)->middleware('can:manage-job-shifts');
+
     Route::middleware('can:manage-employees')->prefix('employees')->group(function () {
         Route::get('import', [EmployeeController::class, 'showImportExcelForm'])->name('employees.showExcelForm');
         Route::post('import', [EmployeeController::class, 'storeFromExcel'])->name('employees.storeFromExcel');
@@ -62,9 +65,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('employees/salary')->middleware('can:manage-employees-salary')->group(function () {
-        Route::get('/', [EmployeesSalaryController::class, 'show'])->name('employees.salary.index');
+        Route::get('/', [EmployeesSalaryController::class, 'index'])->name('employees.salary.index');
     });
 
     Route::resource('employees', EmployeeController::class)->middleware('can:manage-employees');
-
+    
 });

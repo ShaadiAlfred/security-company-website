@@ -189,12 +189,6 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    {{--
-                                    <input name="job_location" type="text" maxlength="32"
-                                           class="form-control @error('job_location') is-invalid @enderror" required
-                                           id="job_location" placeholder="@lang('Job Location')"
-                                           value="{{ old('job_location') }}">
-                                    --}}
                                     @error('job_location_id')
                                         <small class="form-control-feedback">
                                             {{ $message }}
@@ -460,6 +454,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="job_shift_id">
+                                        @lang('Job Shift')
+                                    </label>
+                                    <select id="job_shift_id" name="job_shift_id"
+                                            class="form-control" required>
+                                        @foreach($jobShifts as $jobShift)
+                                            <option value="{{ $jobShift->id }}">
+                                                {{ $jobShift->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('job_shift_id')
+                                        <small class="form-control-feedback">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">
                             @lang('Add Employee')
                         </button>
@@ -518,6 +534,14 @@
             $('.mydatepicker').datepicker('update', new Date);
 
             $('#job_location_id').select2({
+                width: '100%',
+                @if(app()->getLocale() === 'ar')
+                    dir: 'rtl',
+                    language: 'ar'
+                @endif
+            });
+
+            $('#job_shift_id').select2({
                 width: '100%',
                 @if(app()->getLocale() === 'ar')
                     dir: 'rtl',

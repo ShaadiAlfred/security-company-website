@@ -15,124 +15,105 @@ class AttendanceSeeder extends Seeder
      */
     public function run()
     {
-        $date = Carbon::now();
+        $attendanceCheckActualTime = Carbon::today()->addDay();
 
-        // 12 hours shift
-        for ($i = 0; $i < 6; ++$i) {
+        for ($i = 0; $i < 7; $i++) {
+            // First shift ( -> 12)
+            $employeeId = 1;
 
-            Attendance::create([
-                'employee_id' => 1,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
+            $attendanceCheckTimestamps = [
+                [2, 10],
+                [4, 5],
+                [6, 2],
+                [8, 3],
+                [9, 58],
+                [12, 9],
+            ];
 
-            Attendance::create([
-                'employee_id' => 2,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
+            foreach ($attendanceCheckTimestamps as $attendanceCheckTimestmap) {
+                list($hours, $minutes) = $attendanceCheckTimestmap;
 
-            $date = $date->addHours(2);
+                $attendanceCheckActualTime->setTime($hours, $minutes);
+
+                Attendance::create([
+                    'employee_id' => $employeeId,
+                    'is_present' => 1,
+                    'submitted_by' => 2,
+                    'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
+                    'latitude' => 30.1289516,
+                    'longitude' => 31.3289385,
+                    'created_at' => $attendanceCheckActualTime,
+                    'updated_at' => $attendanceCheckActualTime,
+                ]);
+            }
+
+            // Second shift (12 -> 24)
+
+            $employeeId = 2;
+
+            $attendanceCheckActualTime = Carbon::today()->addDay();
+
+            $attendanceCheckTimestamps = [
+                [14, 0],
+                [16, 8],
+                [18, 1],
+                [19, 56],
+                [22, 10],
+                [24, 2],
+            ];
+
+            foreach ($attendanceCheckTimestamps as $attendanceCheckTimestmap) {
+                list($hours, $minutes) = $attendanceCheckTimestmap;
+
+                $attendanceCheckActualTime->setTime($hours, $minutes);
+
+                Attendance::create([
+                    'employee_id' => $employeeId,
+                    'is_present' => 1,
+                    'submitted_by' => 2,
+                    'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
+                    'latitude' => 30.1289516,
+                    'longitude' => 31.3289385,
+                    'created_at' => $attendanceCheckActualTime,
+                    'updated_at' => $attendanceCheckActualTime,
+                ]);
+            }
+
+
+            // Third shift (7 -> 19)
+
+            $employeeId = 3;
+
+            $attendanceCheckActualTime = Carbon::today()->addDay();
+
+            $attendanceCheckTimestamps = [
+                [9, 10],
+                [11, 5],
+                [13, 2],
+                [15, 1],
+                [16, 55],
+                [19, 10],
+            ];
+
+            foreach ($attendanceCheckTimestamps as $attendanceCheckTimestmap) {
+                list($hours, $minutes) = $attendanceCheckTimestmap;
+
+                $attendanceCheckActualTime->setTime($hours, $minutes);
+
+                Attendance::create([
+                    'employee_id' => $employeeId,
+                    'is_present' => 1,
+                    'submitted_by' => 2,
+                    'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
+                    'latitude' => 30.1289516,
+                    'longitude' => 31.3289385,
+                    'created_at' => $attendanceCheckActualTime,
+                    'updated_at' => $attendanceCheckActualTime,
+                ]);
+            }
+
+            $attendanceCheckActualTime->addDay();
         }
 
-        // 6 hours shift on another day
-        $date = Carbon::now()->addDay(1);
-
-        for ($i = 0; $i < 3; ++$i) {
-
-            Attendance::create([
-                'employee_id' => 1,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
-            Attendance::create([
-                'employee_id' => 2,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
-            $date = $date->addHours(2);
-        }
-
-        // Another month
-        $date = Carbon::now()->addMonth();
-        // 12 hours shift
-        for ($i = 0; $i < 6; ++$i) {
-
-            Attendance::create([
-                'employee_id' => 1,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
-            Attendance::create([
-                'employee_id' => 2,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
-            $date = $date->addHours(2);
-        }
-
-        // 6 hours shift on another day
-        $date = Carbon::now()->addDay(1);
-
-        for ($i = 0; $i < 3; ++$i) {
-
-            Attendance::create([
-                'employee_id' => 1,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
-            Attendance::create([
-                'employee_id' => 2,
-                'is_present' => rand(0, 1),
-                'submitted_by' => 2,
-                'submitted_from' => '4A، حارة طارق ابو الليل، عين شمس، القاهرة',
-                'latitude' => 30.1289516,
-                'longitude' => 31.3289385,
-                'created_at' => $date,
-                'updated_at' => $date,
-            ]);
-
-            $date = $date->addHours(2);
-        }
     }
 }

@@ -550,3 +550,13 @@ h1, h2, h3, h4, h5, h6,
 #table_filter {
     float: left;
 }
+
+// Fix clock picker arrow
+.popover.bottom>.arrow:after {
+    margin-right: -10px;
+}
+
+// Fix clock picker text direction
+.clockpicker-popover .popover-title {
+    direction: ltr;
+}
