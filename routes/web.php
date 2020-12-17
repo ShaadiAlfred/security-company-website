@@ -71,8 +71,3 @@ Route::middleware('auth')->group(function () {
     Route::resource('employees', EmployeeController::class)->middleware('can:manage-employees');
     
 });
-
-
-Route::get('storage_link', function () {
-    Illuminate\Support\Facades\Artisan::call('storage:link');
-});
