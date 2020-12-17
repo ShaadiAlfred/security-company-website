@@ -33,8 +33,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $jobShift->name }}</td>
-                                    <td>{{ $jobShift->start->format('h:i') }}</td>
-                                    <td>{{ $jobShift->end->format('h:i') }}</td>
+                                    <td>{{ $jobShift->start->format('H:i') }}</td>
+                                    <td>{{ $jobShift->end->format('H:i') }}</td>
                                     <td>
                                         <div class="button-group">
                                             <a href="{{ route('job_shifts.edit', $jobShift) }}"

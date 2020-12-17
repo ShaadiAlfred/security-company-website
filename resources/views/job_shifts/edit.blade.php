@@ -56,7 +56,7 @@
                                     </label>
                                     <div class="input-group">
                                         <input id="start" name="start" class="form-control timepicker"
-                                               value="{{ $jobShift->start->format('G:i') }}" required />
+                                               value="{{ $jobShift->start->format('H:i') }}" required />
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                         </div>
@@ -76,7 +76,7 @@
                                     </label>
                                     <div class="input-group">
                                         <input id="end" name="end" class="form-control timepicker"
-                                               value="{{ $jobShift->end->format('G:i') }}" required />
+                                               value="{{ $jobShift->end->format('H:i') }}" required />
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fas fa-clock"></i></span>
                                         </div>
