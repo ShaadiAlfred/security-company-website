@@ -3,6 +3,8 @@
 @push('stylesheets')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
+    <!-- Date picker plugins css -->
+    <link href="{{ asset('assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <style type="text/css" media="screen">
         table tbody td:last-child {
             direction: ltr
@@ -30,6 +32,26 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">@lang('Manage Attendance')</h4>
+                <div class="row">
+                    <div class="col-4 ml-auto">
+                        <div class="input-group">
+                            <input id="datepicker" name="datepicker" type="text"
+                                   class="form-control" placeholder="MM-YYYY">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="icon-calender"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 mr-auto">
+                        <div class="input-group">
+                            <a role="button"
+                               href="{{ route('moderators.download_attendance') . '?date=' . request()->date }}"
+                               class="btn waves-effect waves-light btn-outline-success">
+                                @lang('Download')
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table id="table" class="table table-striped">
                         <thead>
@@ -93,6 +115,11 @@
     <script src="{{ asset('/assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js') }}"></script>
     <!-- DataTables date sorting -->
     <script src="{{ asset('/js/date_sorting_datatables.js') }}" type="text/javascript"></script>
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="{{ asset('assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    @if(app()->getLocale() === 'ar')
+        <script src="{{ asset('js/bootstrap-datepicker-ar.js') }}"></script>
+    @endif
 
     <script type="text/javascript">
         $(document).ready(() => {
@@ -108,6 +135,34 @@
                     }
                 @endif
             });
+
+
+            // Date picker init
+            const datePicker = $('#datepicker').datepicker({
+                format: 'mm-yyyy',
+                immediateUpdates: true,
+                minViewMode: 1,
+                maxViewMode: 3,
+                autoclose: true,
+                title: '@lang('Show attendance for')',
+                @if(app()->getLocale() === 'ar')
+                    language: 'ar',
+                @endif
+            });
+
+            @if(request()->has('date'))
+                $('#datepicker')
+                    .datepicker('setDate', moment('{{ request()->date }}', 'MM-YYYY')
+                    .startOf('month')
+                    .format('MM-YYYY'));
+            @endif
+
+            $('#datepicker').datepicker()
+                .on('changeDate', function(e) {
+                    const date = moment(e.date).format('MM-YYYY');
+                    const url = `{{ route('moderators.manage_attendance') }}?date=${date}`;
+                    window.location.replace(url);
+                });
         });
     </script>
 @endpush

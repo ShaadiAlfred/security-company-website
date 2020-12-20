@@ -17,6 +17,15 @@ class Attendance extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_present' => 'boolean',
+    ];
+
+    /**
      * Returns the user that submitted it
      */
     public function submittedBy()
