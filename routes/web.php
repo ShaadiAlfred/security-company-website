@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/manage_attendance', [AttendanceController::class, 'manageAttendance'])->name('moderators.manage_attendance');
 
+            Route::get('/download_attendance', [AttendanceController::class, 'downloadAttendance'])->name('moderators.download_attendance');
+
             Route::delete('/{user}', [ModeratorController::class, 'destroy'])->name('moderators.destroy');
             Route::get('/', [ModeratorController::class, 'index'])->name('moderators.index');
         });
@@ -69,5 +71,5 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('employees', EmployeeController::class)->middleware('can:manage-employees');
-    
+
 });

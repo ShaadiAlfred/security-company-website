@@ -22,8 +22,8 @@ class CreateEmployeesTable extends Migration
             $table->string('phone', 64)->nullable();
             $table->unsignedTinyInteger('age')->nullable();
             $table->string('notes', 64)->nullable();
-            $table->foreignId('job_location_id')->references('id')->on('job_locations')->nullable(); // الموقع
-            $table->foreignId('job_shift_id')->references('id')->on('job_shifts')->nullable();
+            $table->foreignId('job_location_id')->nullable()->references('id')->on('job_locations'); // الموقع
+            $table->foreignId('job_shift_id')->nullable()->references('id')->on('job_shifts');
             $table->string('section', 32)->nullable();
             $table->string('3ohda', 16)->nullable();
             $table->date('hired_on')->nullable();

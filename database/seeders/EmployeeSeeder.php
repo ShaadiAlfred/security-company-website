@@ -15,21 +15,21 @@ class EmployeeSeeder extends Seeder
     public function run()
     {
         Employee::create([
-            'number' => 1001,
+            'number' => 1422,
             'name' => 'Shaadi Alfred',
             'job_location_id' => 1,
             'job_shift_id' => 1,
         ]);
 
         Employee::create([
-            'number' => 1002,
+            'number' => 1423,
             'name' => 'Ameer Nagi',
             'job_location_id' => 2,
             'job_shift_id' => 2,
         ]);
 
         Employee::create([
-            'number' => 1003,
+            'number' => 1424,
             'name' => 'Ahmed Mahmoud',
             'job_location_id' => 2,
             'job_shift_id' => 3,
