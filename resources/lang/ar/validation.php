@@ -33,7 +33,7 @@ return [
     'confirmed' => 'خانة تأكيد :attribute غير متطابقة.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
-    'date_format' => 'The :attribute does not match the format :format.',
+    'date_format' => 'حقل :attribute لا يطابق الصيغة :format.',
     'different' => 'The :attribute and :other must be different.',
     'digits' => 'The :attribute must be :digits digits.',
     'digits_between' => 'The :attribute must be between :min and :max digits.',
@@ -160,6 +160,7 @@ return [
         'job_location_id' => 'الموقع',
         'job_shift_id'    => 'الشيفت',
         'status'          => 'الحالة',
+        'hired_on'        => 'تاريخ التعيين',
     ],
 
 ];

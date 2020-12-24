@@ -242,7 +242,11 @@
                         let delay = 0;
 
                         for (const error in errors) {
-                            setTimeout(showError.bind(this, errors[error][0]), delay);
+                            let errorMessage = errors[error][0];
+
+                            errorMessage = errorMessage.replace(/d\/m\/Y/, 'سنة/شهر/يوم');
+
+                            setTimeout(showError.bind(this, errorMessage), delay);
                             delay += 1000;
                         }
                     }
