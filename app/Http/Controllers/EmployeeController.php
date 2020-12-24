@@ -31,9 +31,15 @@ class EmployeeController extends Controller
 
         $employees = Employee::all();
 
+        $jobLocations = JobLocation::all();
+
+        $jobShifts = JobShift::all();
+
         return view('employees.index', [
-            'pageTitle' => $pageTitle,
-            'employees' => $employees,
+            'pageTitle'    => $pageTitle,
+            'employees'    => $employees,
+            'jobLocations' => $jobLocations,
+            'jobShifts'    => $jobShifts,
         ]);
     }
 
@@ -147,6 +153,17 @@ class EmployeeController extends Controller
         }
 
         return back()->with('success', 'Employee was updated!');
+    }
+
+    public function apiUpdate(Employee $employee, Request $request)
+    {
+        $validatedData = $request->validate($this->getValidationRules($employee->id));
+
+        $employee->update($validatedData);
+
+        return response()->json([
+            'success' => __('Employee was updated!')
+        ]);
     }
 
     /**

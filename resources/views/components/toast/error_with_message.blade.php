@@ -1,9 +1,9 @@
 <div>
     <script type="text/javascript">
-        const showError = () => {
+        const showError = (message) => {
             window.$.toast({
                 heading: '@lang('Error!')',
-                text: '{{ $message }}',
+                text: message,
                 hideAfter: 5000,
                 stack: 5,
                 icon: 'error',
@@ -11,6 +11,5 @@
                 position: '{{ app()->getLocale() === 'ar' ? 'bottom-right' : 'bottom-left' }}',
             });
         };
-        {{ $automaticTrigger ? 'showError();' : '' }}
     </script>
 </div>

@@ -47,6 +47,7 @@
         "All Employees": "كل الموظفين",
         "Add Employee": "إضافة موظف",
         "Delete Employee": "حذف موظف",
+        "Update": "تحديث",
 
     // Manage admins
     "Admin was updated!": "تم تحديث بيانات المدير بنجاح!",

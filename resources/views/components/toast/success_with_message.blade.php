@@ -1,16 +1,15 @@
 <div>
     <script type="text/javascript">
-        const showError = () => {
+        const showSuccessWithMessage = (message) => {
             window.$.toast({
-                heading: '@lang('Error!')',
-                text: '{{ $message }}',
+                heading: '@lang('Success!')',
+                text: message,
                 hideAfter: 5000,
                 stack: 5,
-                icon: 'error',
+                icon: 'success',
                 textAlign: '{{ app()->getLocale() === 'ar' ? 'right' : 'left' }}',
                 position: '{{ app()->getLocale() === 'ar' ? 'bottom-right' : 'bottom-left' }}',
             });
         };
-        {{ $automaticTrigger ? 'showError();' : '' }}
     </script>
 </div>

@@ -77,9 +77,9 @@ return [
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute may not be greater than :max.',
+        'numeric' => 'حقل :attribute لا يمكن أن يكون أكبر من :max.',
         'file' => 'The :attribute may not be greater than :max kilobytes.',
-        'string' => 'The :attribute may not be greater than :max characters.',
+        'string' => 'حقل :attribute لا يمكن أن يكون أكثر من :max أحرف.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
     'mimes' => 'The :attribute must be a file of type: :values.',
@@ -97,7 +97,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+    'required' => 'حقل :attribute مطلوب.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -148,11 +148,18 @@ return [
     */
 
     'attributes' => [
-        'email'       => 'إيميل',
-        'password'    => 'كلمة المرور',
-        'name'        => 'إسم',
-        'national_id' => 'رقم قومي',
-        'number'      => 'رقم',
+        'email'           => 'الإيميل',
+        'password'        => 'كلمة المرور',
+        'name'            => 'الإسم',
+        'national_id'     => 'الرقم القومي',
+        'number'          => 'الرقم',
+        'address'         => 'العنوان',
+        'phone'           => 'رقم التليفون',
+        'age'             => 'السن',
+        'section'         => 'القطاع',
+        'job_location_id' => 'الموقع',
+        'job_shift_id'    => 'الشيفت',
+        'status'          => 'الحالة',
     ],
 
 ];

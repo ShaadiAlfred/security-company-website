@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::post('import', [EmployeeController::class, 'storeFromExcel'])->name('employees.storeFromExcel');
         Route::get('attendance', [EmployeeController::class, 'attendance'])->name('employees.attendance');
         Route::post('attendance', [EmployeeController::class, 'submitAttendance'])->name('employees.submitAttendance');
+        Route::put('api/update/{employee}', [EmployeeController::class, 'apiUpdate'])->name('employees.api.update');
     });
 
     Route::prefix('employees/salary')->middleware('can:manage-employees-salary')->group(function () {
