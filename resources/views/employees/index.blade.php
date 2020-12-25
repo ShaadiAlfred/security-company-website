@@ -120,8 +120,7 @@
 @push('javascript')
     <!-- MomentsJS -->
     <script src="{{ asset('/assets/node_modules/moment/moment.js') }}" type="text/javascript"></script>
-    <!-- Editable -->
-    <script src="{{ asset('assets/node_modules/jquery-datatables-editable/jquery.dataTables.js') }}"></script>
+    <!-- Editable Table -->
     <script src="{{ asset('assets/node_modules/tiny-editable/mindmup-editabletable.min.js') }}"></script>
     <!-- DataTables -->
     <script src="{{ asset('/assets/node_modules/datatables.net/js/jquery.dataTables.min.js') }}"></script>
