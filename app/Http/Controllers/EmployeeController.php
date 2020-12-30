@@ -230,6 +230,7 @@ class EmployeeController extends Controller
      */
     public function submitAttendance(Request $request): \Illuminate\Http\Response
     {
+        // TODO: save picture
         $request->validate([
             'employeeId' => 'required',
             'isPresent' => 'required',
@@ -238,7 +239,7 @@ class EmployeeController extends Controller
         try {
             $location = $this->getLocation($request->latitude, $request->longitude);
 
-            Attendance::create([
+            $attendance = Attendance::create([
                 'employee_id'    => $request->employeeId,
                 'is_present'     => $request->boolean('isPresent'),
                 'note'           => $request->note,
@@ -247,6 +248,14 @@ class EmployeeController extends Controller
                 'latitude'       => $request->latitude,
                 'longitude'      => $request->longitude,
             ]);
+
+            if ($request->hasFile('picture')) {
+                $picture = Storage::disk('public')
+                    ->put(Attendance::$picturesPath, $request->file('picture'));
+
+                $attendance->picture = basename($picture);
+                $attendance->save();
+            }
 
             return response('Success', 200);
         } catch (\Exception $e) {

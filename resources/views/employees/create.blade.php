@@ -31,7 +31,7 @@
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-8">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input id="picture"
@@ -53,7 +53,9 @@
                         </div>
                         <div class="row picture-preview d-none">
                             <div class="col">
-                                <img id="picture-preview" />
+                                <img id="picture-preview"
+                                     class="profile-picture m-t-15 mx-auto"
+                                     style="width: 300px; height: 300px;" />
                             </div>
                         </div>
                         <br />

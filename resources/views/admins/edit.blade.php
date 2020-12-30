@@ -91,7 +91,8 @@
                         </div>
                         <div class="row picture-preview">
                             <div class="col">
-                                <img id="picture-preview" src="{{ asset($admin->getPicturePath()) }}" />
+                                <img id="picture-preview" src="{{ asset($admin->getPicturePath()) }}"
+                                     class="profile-picture mx-auto" />
                             </div>
                         </div>
                         <br />

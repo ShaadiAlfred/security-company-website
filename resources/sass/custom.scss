@@ -15,32 +15,59 @@
     height: calc(1.5em + .75rem + 2px) !important;
 }
 
-// profile picture preview
-#picture-preview {
-    max-height: 18rem;
-    display: block;
-    border-radius: 50%;
-    margin: auto;
-    padding: 1rem;
-}
-
-// profile picture in table
 .profile-picture {
     display: block;
-    height: 6rem;
-    width: auto;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
+    object-fit: fill;
 }
 
-// employee profile picture in attendance table
-.employee-profile-picture {
-    width: 4rem;
-    height: auto;
+.small-profile-picture {
+    display: block;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    padding: 0.5rem;
+    object-fit: fill;
 }
 
 #datepicker {
     cursor: pointer;
     caret-color: transparent;
+}
+
+// webcam
+#webcam-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+}
+
+#webcam {
+    position: fixed;
+    height: 100vh;
+    width: auto;
+    left: 50%;
+}
+
+#flip-webcam-btn {
+    position: relative;
+    top: 3%;
+    right: 80%;
+}
+
+#webcam-btns-container {
+    position: relative;
+    top: 80vh;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#webcam-btns-container button {
+    margin: 0.5rem;
 }

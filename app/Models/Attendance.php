@@ -26,6 +26,13 @@ class Attendance extends Model
     ];
 
     /**
+     * The path of pictures.
+     *
+     * @var string
+     */
+    public static string $picturesPath = 'attendance/';
+
+    /**
      * Returns the user that submitted it
      */
     public function submittedBy()
@@ -51,5 +58,15 @@ class Attendance extends Model
         $coordinates = $this->latitude . ',' . $this->longitude;
 
         return "https://www.google.com/maps/search/?api=1&query=${coordinates}";
+    }
+
+    /**
+     * Get the path of attendance's picture
+     *
+     * @return string
+     */
+    public function getPicturePath(): string
+    {
+        return 'storage/' . static::$picturesPath . $this->picture;
     }
 }

@@ -70,7 +70,7 @@
                                     id="password-confirm" placeholder="@lang('Password')">
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-8">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input id="picture"
@@ -92,7 +92,11 @@
                         </div>
                         <div class="row picture-preview">
                             <div class="col">
-                                <img id="picture-preview" src="{{ asset($moderator->getPicturePath()) }}" />
+                                <div class="picture-preview-container">
+                                    <img id="picture-preview" src="{{ asset($moderator->getPicturePath()) }}"
+                                         style="width: 220px; height: 220px;"
+                                         class="profile-picture m-t-30 mx-auto" />
+                                </div>
                             </div>
                         </div>
                         <br />

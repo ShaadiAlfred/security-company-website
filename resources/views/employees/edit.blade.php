@@ -32,7 +32,7 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-8">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input id="picture"
@@ -54,7 +54,10 @@
                         </div>
                         <div class="row picture-preview">
                             <div class="col">
-                                <img id="picture-preview" src="{{ asset($employee->getPicturePath()) }}" />
+                                <img id="picture-preview"
+                                     src="{{ asset($employee->getPicturePath()) }}"
+                                     class="profile-picture m-t-15 mx-auto"
+                                     style="width: 300px; height: 300px;" />
                             </div>
                         </div>
                         <br />

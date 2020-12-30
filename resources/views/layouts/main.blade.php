@@ -285,7 +285,7 @@
                                         <li>
                                             <a href="{{ route('employees.salary.index') }}">
                                                 <i class="ti-money"></i>
-                                                <span class="hide-menu">
+                                                <span>
                                                     @lang('Salary')
                                                 </span>
                                             </a>

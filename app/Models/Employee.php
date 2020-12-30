@@ -9,6 +9,11 @@ class Employee extends Model
 {
     use HasFactory;
 
+    /**
+     * The path of pictures.
+     *
+     * @var string
+     */
     public static $picturesPath = 'profile-pictures/employees/';
 
     /**
@@ -89,6 +94,11 @@ class Employee extends Model
         }
     }
 
+    /**
+     * Get the path of employee's picture
+     *
+     * @return string
+     */
     public function getPicturePath(): string
     {
         return 'storage/' . static::$picturesPath . $this->picture;

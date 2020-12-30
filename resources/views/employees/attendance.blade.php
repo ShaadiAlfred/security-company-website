@@ -78,9 +78,44 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="webcam-container" class="d-none">
+                            <video id="webcam" autoplay></video>
+
+                            <button id="flip-webcam-btn"
+                                    type="button"
+                                    class="btn btn-cyan btn-circle btn-lg">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+
+                            <div id="webcam-btns-container" class="form-group">
+                                <button id="capture-btn"
+                                        type="button"
+                                        class="btn btn-success btn-circle btn-lg">
+                                    <i class="fas fa-camera-retro"></i>
+                                </button>
+                                <button id="close-webcam-btn"
+                                        type="button"
+                                        class="btn btn-danger btn-circle btn-lg">
+                                    <i class="fas fa-times-circle"></i>
+                                </button>
+                            </div>
+                            <canvas id="canvas" class="d-none"></canvas>
+                            <audio id="snapSound"
+                                   src="{{ asset('audio/camera-shutter-click.wav') }}"
+                                   preload="auto">
+                            </audio>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <img id="taken-picture-preview" class="img-fluid p-40" />
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
+                                    <button id="open-webcam-btn" type="button" class="btn btn-info">
+                                        <i class="fas fa-camera"></i> @lang('Take A Photo')
+                                    </button>
                                     <button type="submit" class="btn btn-primary">
                                         @lang('Send')
                                     </button>
@@ -107,6 +142,12 @@
     <!-- swtichery -->
     <script src="{{ asset('/assets/node_modules/switchery/dist/switchery.min.js') }}"></script>
 
+    <!-- webcam-easy -->
+    <script src="{{ asset('js/webcam-easy.min.js') }}"></script>
+
+    <!-- base64ToBlob -->
+    <script type="text/javascript" src="{{ asset('js/base64ToBlob.js') }}"></script>
+
     <script type="text/javascript">
         async function getCurrentLocation(event) {
             event.preventDefault();
@@ -131,17 +172,26 @@
             const employeeId = $('#employee').val();
             const note = $('#note').val();
             const isPresent = document.querySelector('#is_present').checked;
+            const formData = new FormData();
+
+            formData.append('employeeId', employeeId);
+            formData.append('isPresent', isPresent);
+            formData.append('note', note);
+            formData.append('latitude', location.coords.latitude);
+            formData.append('longitude', location.coords.longitude);
+
+            if (picture) {
+                const blob = base64ToBlob(picture.replace(/^data:image\/(png|jpg);base64,/, ''), 'image/png');
+                console.log(blob)
+                formData.append('picture', blob);
+            }
 
             $.ajax({
                 method: 'POST',
                 url: submitAttendanceUrl,
-                data: {
-                    employeeId: employeeId,
-                    isPresent: isPresent,
-                    note: note,
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                },
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: showSuccess,
                 error: showError,
             });
@@ -162,6 +212,63 @@
                 @endif
             });
         });
+    </script>
+    <script>
+        const webcamContainer = document.getElementById('webcam-container');
+        const webcamElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const snapSoundElement = document.getElementById('snapSound');
+        const webcam = new Webcam(webcamElement, 'enviroment', canvasElement, snapSoundElement);
+        const captureBtn = document.getElementById('capture-btn');
+        const closeWebcamBtn = document.getElementById('close-webcam-btn');
+        const flipWebcamBtn = document.getElementById('flip-webcam-btn');
+        let picture;
+        const takenPicturePreview = document.getElementById('taken-picture-preview');
 
+        function startWebcam() {
+            webcamContainer.classList.remove('d-none');
+
+            webcam.start()
+                  .then(result =>{
+                      console.log('Webcam started!');
+                      if (webcamElement.style.transform === 'scale(-1, 1)') {
+                          webcamElement.style.transform = 'translateX(-50%) scale(-1, 1)';
+                      } else {
+                          webcamElement.style.transform = 'translateX(-50%)';
+                      }
+                  })
+                  .catch(err => {
+                      console.log(err);
+                  });
+        }
+
+        function flipWebcam() {
+            webcam.flip();
+            webcam.stop();
+            startWebcam();
+        }
+
+        function closeWebcam() {
+            webcam.stop();
+            webcamContainer.classList.add('d-none');
+        }
+
+        document.getElementById('open-webcam-btn').addEventListener('click', () => {
+            startWebcam();
+        });
+
+        captureBtn.addEventListener('click', () => {
+            picture = webcam.snap()
+            takenPicturePreview.src = picture;
+            closeWebcam();
+        });
+
+        flipWebcamBtn.addEventListener('click', () => {
+            flipWebcam();
+        });
+
+        closeWebcamBtn.addEventListener('click', () => {
+            closeWebcam();
+        });
     </script>
 @endpush

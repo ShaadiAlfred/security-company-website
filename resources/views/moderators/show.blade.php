@@ -18,7 +18,9 @@
             <div class="card">
                 <div class="card-body">
                     <center class="m-t-30">
-                        <img src="{{ asset($moderator->getPicturePath()) }}" class="img-circle" width="150">
+                        <img src="{{ asset($moderator->getPicturePath()) }}"
+                             class="profile-picture">
+
                         <h4 class="card-title m-t-10">
                             {{ $moderator->name }}
                         </h4>
@@ -67,7 +69,8 @@
                                     <div class="sl-item">
                                         <div class="sl-left">
                                             <img src="{{ asset($attendance->employee->getPicturePath()) }}"
-                                                 alt="user" class="img-circle">
+                                                alt="user" class="profile-picture"
+                                                style="height: 40px; width: 40px;">
                                         </div>
                                         <div class="sl-right">
                                             <div>

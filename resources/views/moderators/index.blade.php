@@ -30,13 +30,13 @@
                             @foreach($moderators as $moderator)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="{{ route('moderators.show', $moderator) }}">
-                                            <div class="flex align-items-center">
-                                                <img src="{{ asset($moderator->getPicturePath()) }}"
-                                                     class="employee-profile-picture" />
-                                                {{ $moderator->name }}
-                                            </div>
+                                            <img src="{{ asset($moderator->getPicturePath()) }}"
+                                                class="profile-picture mx-auto m-b-10"
+                                                style="width: 80px; height: 80px;" />
+
+                                            {{ $moderator->name }}
                                         </a>
                                     </td>
                                     <td>

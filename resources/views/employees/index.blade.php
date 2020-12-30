@@ -76,8 +76,10 @@
                                     <td>{{ $employee->number }}</td>
                                     <td>
                                         <div>
-                                            <img src="{{ asset($employee->getPicturePath()) }}"
-                                                 class="profile-picture" />
+                                            <div class="profile-picture-container">
+                                                <img src="{{ asset($employee->getPicturePath()) }}"
+                                                     class="profile-picture" />
+                                            </div>
                                         </div>
                                     </td>
                                     <td>{{ $employee->name }}</td>

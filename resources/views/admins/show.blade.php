@@ -67,7 +67,8 @@
                                     <div class="sl-item">
                                         <div class="sl-left">
                                             <img src="{{ asset($attendance->employee->getPicturePath()) }}"
-                                                 alt="user" class="img-circle">
+                                                 alt="user" class="profile-picture"
+                                                 style="width: 40px; height: 40px;">
                                         </div>
                                         <div class="sl-right">
                                             <div>

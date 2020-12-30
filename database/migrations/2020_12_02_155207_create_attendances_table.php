@@ -22,6 +22,7 @@ class CreateAttendancesTable extends Migration
             $table->string('submitted_from', 256);
             $table->double('latitude', 16, 12);
             $table->double('longitude', 16, 12);
+            $table->string('picture', 64)->default('default.png');
             $table->timestamps();
         });
     }

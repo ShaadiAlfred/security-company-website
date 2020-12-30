@@ -58,8 +58,9 @@
                             <tr>
                                 <th>@lang('#')</th>
                                 <th>@lang('Employee Number')</th>
-                                <th>@lang('Attendance')</th>
                                 <th>@lang('Employee')</th>
+                                <th>@lang('Attendance')</th>
+                                <th>@lang('Picture')</th>
                                 <th>@lang('Note')</th>
                                 <th>@lang('Submitted By')</th>
                                 <th>@lang('Submitted From')</th>
@@ -72,15 +73,23 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $attendanceRecord->employee->number }}</td>
                                     <td>
+                                        <a href="{{ route('employees.edit', $attendanceRecord->employee) }}">
+                                            <div class="d-flex align-items-center text-center">
+                                                <img
+                                                    src="{{ asset($attendanceRecord->employee->getPicturePath()) }}"
+                                                    class="small-profile-picture" />
+
+                                                {{ $attendanceRecord->employee->name }}
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td>
                                         {{ $attendanceRecord->is_present ? __('Present') : __('Absent') }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('employees.edit', $attendanceRecord->employee) }}">
-                                            <div class="d-flex align-items-center">
-                                                <img src="{{ asset($attendanceRecord->employee->getPicturePath()) }}"
-                                                     class="employee-profile-picture" />
-                                                {{ $attendanceRecord->employee->name }}
-                                            </div>
+                                        <a href="{{ asset($attendanceRecord->getPicturePath()) }}" target="_blank">
+                                            <img src="{{ asset($attendanceRecord->getPicturePath()) }}"
+                                                 class="small-profile-picture">
                                         </a>
                                     </td>
                                     <td>{{ $attendanceRecord->note }}</td>
