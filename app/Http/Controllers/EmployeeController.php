@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EmployeesImport;
+use App\Jobs\DeleteOldAttendanceImages;
 use App\Models\Attendance;
 use App\Models\Employee;
 use App\Models\JobLocation;
@@ -255,6 +256,13 @@ class EmployeeController extends Controller
 
                 $attendance->picture = basename($picture);
                 $attendance->save();
+
+                dispatch(function () use ($attendance) {
+                    Storage::delete(Attendance::$picturesPath . $attendance->picture);
+
+                    $attendance->picture = 'default.png';
+                    $attendance->save();
+                })->delay(now()->addDays(45));
             }
 
             return response('Success', 200);
