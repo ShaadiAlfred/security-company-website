@@ -257,7 +257,7 @@ class EmployeeController extends Controller
                 $attendance->save();
 
                 dispatch(function () use ($attendance) {
-                    Storage::delete(Attendance::$picturesPath . $attendance->picture);
+                    Storage::disk('public')->delete(Attendance::$picturesPath . $attendance->picture);
 
                     $attendance->picture = 'default.png';
                     $attendance->save();
