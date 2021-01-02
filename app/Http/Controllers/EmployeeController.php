@@ -231,7 +231,6 @@ class EmployeeController extends Controller
      */
     public function submitAttendance(Request $request): \Illuminate\Http\Response
     {
-        // TODO: save picture
         $request->validate([
             'employeeId' => 'required',
             'isPresent' => 'required',
